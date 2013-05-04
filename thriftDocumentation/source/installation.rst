@@ -69,11 +69,28 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 
 			sudo make install
 
+Verify installation
+###################
+
 Now your Thrift installation is completed! To verify that you have succesfully installed Thrift just type ::
 
 	thrift -version
 and you should be able to see something like the following: ::
+
 	Thrift version 0.9.0
+
+Additionaly you can go to the tutorial directory and follow the instructions located on the README files on each of the targeted languages directories. For example for JAVA you should be able to verify the following: ::
+
+  thrift/tutorial/java$ file ../../lib/java/build/libthrift-${version}-${release}.jar 
+  ../../lib/java/libthrift.jar: Zip archive data, at least v1.0 to extract
+
+  thrift/tutorial/java$ file ../../compiler/cpp/thrift
+  ../../compiler/cpp/thrift: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.15, not stripped
+
+  thrift/tutorial/java$ ls ../../lib/java/build/lib/
+  commons-lang-2.5.jar  junit-4.4.jar  servlet-api-2.5.jar  slf4j-api-1.5.8.jar  slf4j-simple-1.5.8.jar
+
+
 
 .. toctree::
    :maxdepth: 2
