@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Thrift type system &mdash; Thrift Tutorial 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Thrift Tutorial 1.0 documentation" href="index.html" />
+    <link rel="up" title="Introduction to Thrift" href="intro.html" />
+    <link rel="next" title="Thrift Description Language" href="description-language.html" />
+    <link rel="prev" title="Introduction to Thrift" href="intro.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="description-language.html" title="Thrift Description Language"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction to Thrift"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li>
+          <li><a href="intro.html" accesskey="U">Introduction to Thrift</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="thrift-type-system">
+<h1>Thrift type system<a class="headerlink" href="#thrift-type-system" title="Permalink to this headline">¶</a></h1>
+<p>The thrift type system includes base types like bool, byte, double, string and integer but also special types like binary and it also supports structs (equivalent to classes but without inheritance) and also containers (list, set, map) that correspond to commonly available interfaces in most programming languages. The type system focuses on key types available in all programming languages and omits types that are specific to only some programming languages. A detailed reference to Thrift type system follows next and more details can be found here: <a class="reference external" href="http://thrift.apache.org/docs/types/">http://thrift.apache.org/docs/types/</a></p>
+<div class="section" id="base-types">
+<h2>Base types<a class="headerlink" href="#base-types" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><strong>bool</strong>: A boolean value (true or false)</li>
+<li><strong>byte</strong>: An 8-bit signed integer</li>
+<li><strong>i16</strong>: A 16-bit signed integer</li>
+<li><strong>i32</strong>: A 32-bit signed integer</li>
+<li><strong>i64</strong>: A 64-bit signed integer</li>
+<li><strong>double</strong>: A 64-bit floating point number</li>
+<li><strong>string</strong>: A text string encoded using UTF-8 encoding</li>
+</ul>
+</div></blockquote>
+<p><em>Note: There is no support for unsigned integer types, due to the fact that there are no native unsigned integer types in many programming languages. Signed integers can be safely cast to their unsigned counterparts when necessary.</em></p>
+</div>
+<div class="section" id="special-types">
+<h2>Special Types<a class="headerlink" href="#special-types" title="Permalink to this headline">¶</a></h2>
+<p><strong>binary</strong>: a sequence of unencoded bytes</p>
+</div>
+<div class="section" id="structs">
+<h2>Structs<a class="headerlink" href="#structs" title="Permalink to this headline">¶</a></h2>
+<p>A struct has a set of strongly typed fields, each with a unique name identifier. The look very similar to C-like structs.</p>
+<div class="highlight-python"><pre>struct Example {
+  1:i32 number=10,
+  2:i64 bigNumber,
+  3:double decimals,
+  4:string name="thrifty"
+}</pre>
+</div>
+</div>
+<div class="section" id="containers">
+<h2>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>list</strong> (Maps to c++ STL vector, Java ArrayList etc)</p>
+</li>
+<li><p class="first"><strong>set</strong> (Maps to an STL set, Java HashSet etc)</p>
+<blockquote>
+<div><ul class="simple">
+<li>PHP doesn’t support sets - so it is treated similar to a List map</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>map</strong> (Maps to an STL map, Java HashMap etc)</p>
+</li>
+</ul>
+</div></blockquote>
+<p>All the above are the defaults but can be customized to correspond to different types of any language. For this reason custom code generation directives have been added.</p>
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<p>They inherit from the native exception base class as appropriate in each target programming language.</p>
+</div>
+<div class="section" id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h2>
+<p>A service consists of a set of named functions, each with a list of parameters and a return type. It is semantically equivalent to defining an interface or a pure virtual abstract class.</p>
+<div class="highlight-python"><pre>service &lt;name&gt; {
+&lt;returntype&gt; &lt;name&gt;(&lt;arguments&gt;)
+[throws (&lt;exceptions&gt;)]
+...
+}
+
+An example:
+service StringCache {
+void set(1:i32 key, 2:string value),
+string get(1:i32 key) throws (1:KeyNotFound knf),
+void delete(1:i32 key)
+}</pre>
+</div>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Thrift type system</a><ul>
+<li><a class="reference internal" href="#base-types">Base types</a></li>
+<li><a class="reference internal" href="#special-types">Special Types</a></li>
+<li><a class="reference internal" href="#structs">Structs</a></li>
+<li><a class="reference internal" href="#containers">Containers</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#services">Services</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction to Thrift</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="description-language.html"
+                        title="next chapter">Thrift Description Language</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/thrift-types.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="description-language.html" title="Thrift Description Language"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction to Thrift"
+             >previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li>
+          <li><a href="intro.html" >Introduction to Thrift</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Stratos Dimopoulos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

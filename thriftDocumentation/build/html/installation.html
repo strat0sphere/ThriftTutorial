@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Thrift Installation &mdash; Thrift Tutorial 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Thrift Tutorial 1.0 documentation" href="index.html" />
+    <link rel="next" title="Writing a .thrift file" href="thrift-file.html" />
+    <link rel="prev" title="Thrift Description Language" href="description-language.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="thrift-file.html" title="Writing a .thrift file"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="description-language.html" title="Thrift Description Language"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="thrift-installation">
+<h1>Thrift Installation<a class="headerlink" href="#thrift-installation" title="Permalink to this headline">¶</a></h1>
+<p>Detailed information on how to install Thrift can be found here: <a class="reference external" href="http://thrift.apache.org/docs/install/">http://thrift.apache.org/docs/install/</a></p>
+<p>On Ubuntu Linux for example you just need to first install the dependencies and then you are ready to install Thrift.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><dl class="first docutils">
+<dt>Install the languages with witch you plan to use thrift. To use with Java for example, install a Java JDK you prefer. In this demo we are using Oracle JDK 7 for Ubuntu, but you shouldn&#8217;t have problem using the one you like.</dt>
+<dd><ul class="first last">
+<li><p class="first">To use with Java you will also need to install Apache Ant</p>
+<div class="highlight-python"><pre>sudo apt-get install ant</pre>
+</div>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Installing required tools and libraries:</p>
+<div class="highlight-python"><pre>sudo apt-get install libboost-dev libboost-test-dev libboost-program-options-dev libevent-dev automake libtool flex bison pkg-config g++ libssl-dev</pre>
+</div>
+</li>
+</ol>
+<ul class="simple">
+<li>You can check for specific requirements for each language you wish to use here: <a class="reference external" href="http://thrift.apache.org/docs/install/">http://thrift.apache.org/docs/install/</a></li>
+</ul>
+<ol class="arabic">
+<li><p class="first">Download Thrift: <a class="reference external" href="http://thrift.apache.org/download/">http://thrift.apache.org/download/</a></p>
+</li>
+<li><p class="first">Copy the downloaded file into the desired directory and untar the file</p>
+<div class="highlight-python"><pre>tar -xvf thrift-0.9.0.tar.gz</pre>
+</div>
+</li>
+<li><p class="first">For detailed instuctions on how to build Apache Thrift on your specific system you can read here: <a class="reference external" href="http://thrift.apache.org/docs/BuildingFromSource/">http://thrift.apache.org/docs/BuildingFromSource/</a></p>
+<blockquote>
+<div><ul>
+<li><p class="first">For an Ubuntu linux distribution you just need to go to the thrift directory and type:</p>
+<div class="highlight-python"><pre>sudo ./configure</pre>
+</div>
+</li>
+<li><p class="first">At the end of the output you should be able to see a list of all the libraries that are currently built in your system and ready to use with your desired programming languages. If a component is missing you should download the missing language and repeat the above step.</p>
+<div class="highlight-python"><pre>thrift 0.9.0
+
+Building C++ Library ......... : yes
+Building C (GLib) Library .... : no
+Building Java Library ........ : yes
+Building C# Library .......... : no
+Building Python Library ...... : yes
+Building Ruby Library ........ : no
+Building Haskell Library ..... : no
+Building Perl Library ........ : no
+Building PHP Library ......... : no
+Building Erlang Library ...... : no
+Building Go Library .......... : no
+Building D Library ........... : no
+
+C++ Library:
+   Build TZlibTransport ...... : yes
+   Build TNonblockingServer .. : yes
+   Build TQTcpServer (Qt) .... : no
+
+Java Library:
+   Using javac ............... : javac
+   Using java ................ : java
+   Using ant ................. : /usr/bin/ant
+
+Python Library:
+   Using Python .............. : /usr/bin/python</pre>
+</div>
+</li>
+<li><p class="first">Here <a class="reference external" href="http://thrift.apache.org/docs/install/ubuntu/">http://thrift.apache.org/docs/install/ubuntu/</a> you can find all the packages you might need to support your desired language in case some of them are missing.</p>
+</li>
+<li><p class="first">On the same directory run make</p>
+<div class="highlight-python"><pre>sudo make</pre>
+</div>
+</li>
+<li><p class="first">And lastly run</p>
+<div class="highlight-python"><pre>sudo make install</pre>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<p>Now your Thrift installation is completed! To verify that you have succesfully installed Thrift just type</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">thrift</span> <span class="o">-</span><span class="n">version</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>and you should be able to see something like the following: ::</dt>
+<dd>Thrift version 0.9.0</dd>
+</dl>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="description-language.html"
+                        title="previous chapter">Thrift Description Language</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="thrift-file.html"
+                        title="next chapter">Writing a .thrift file</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="thrift-file.html" title="Writing a .thrift file"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="description-language.html" title="Thrift Description Language"
+             >previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Stratos Dimopoulos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

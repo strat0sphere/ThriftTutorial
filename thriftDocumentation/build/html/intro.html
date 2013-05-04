@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction to Thrift &mdash; Thrift Tutorial 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Thrift Tutorial 1.0 documentation" href="index.html" />
+    <link rel="next" title="Thrift type system" href="thrift-types.html" />
+    <link rel="prev" title="Welcome to Thrift Demo’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="thrift-types.html" title="Thrift type system"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Thrift Demo’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction-to-thrift">
+<h1>Introduction to Thrift<a class="headerlink" href="#introduction-to-thrift" title="Permalink to this headline">¶</a></h1>
+<p>Thrift was originally developed by Facebook and now it is open sourced as an Apache project.
+Apache Thrift is a set of code-generation tools that allows developers to build RPC clients and
+servers by just defining the data types and service interfaces in a simple definition file. Given
+this file as an input, code is generated to build RPC clients and servers that communicate
+seamlessly across programming languages.</p>
+<p>In this tutorial I will describe how Thrift works and
+provide a guide for build and installation steps, how to write thrift files and how to generate from
+those files the source code that can be used from different client libraries to communicate with
+the server. Thrift supports a variety of languages including C++, Java, Python, PHP, Ruby but
+for simplicity I will focus this tutorial on examples that include Java and Python.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="thrift-types.html">Thrift type system</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="thrift-types.html#base-types">Base types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thrift-types.html#special-types">Special Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thrift-types.html#structs">Structs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thrift-types.html#containers">Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thrift-types.html#exceptions">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thrift-types.html#services">Services</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="description-language.html">Thrift Description Language</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Thrift Demo&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="thrift-types.html"
+                        title="next chapter">Thrift type system</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/intro.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="thrift-types.html" title="Thrift type system"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Thrift Demo’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Stratos Dimopoulos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
