@@ -56,7 +56,13 @@ All the above are the defaults but can be customized to correspond to different 
 Exceptions
 ##########
 
-They inherit from the native exception base class as appropriate in each target programming language.
+They inherit from the native exception base class as appropriate in each target programming language. ::
+
+	exception InvalidOperation {
+ 	1: i32 what,
+  	2: string why
+	}
+
 
 Services
 ########
