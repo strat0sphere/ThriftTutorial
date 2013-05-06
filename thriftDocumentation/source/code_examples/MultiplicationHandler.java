@@ -1,5 +1,4 @@
 import org.apache.thrift.TException;
-import tutorial.*;
 
 public class MultiplicationHandler implements MultiplicationService.Iface {
 
