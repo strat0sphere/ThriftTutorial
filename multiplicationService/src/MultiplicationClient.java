@@ -1,33 +1,34 @@
-
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TTransportException;
-
 
 public class MultiplicationClient {
+  public static void main(String [] args) {
 
- public static void main(String[] args) {
+   
+    try {
+      TTransport transport;
+     
+      transport = new TSocket("localhost", 9090);
+      transport.open();
 
-  try {
-   TTransport transport;
+      TProtocol protocol = new  TBinaryProtocol(transport);
+      MultiplicationService.Client client = new MultiplicationService.Client(protocol);
 
-   transport = new TSocket("localhost", 9090);
-   transport.open();
+      perform(client);
 
-   TProtocol protocol = new TBinaryProtocol(transport);
-   MultiplicationService.Client client = new MultiplicationService.Client(protocol);
-
-   System.out.println(client.multiply(100, 200));
-
-   transport.close();
-  } catch (TTransportException e) {
-   e.printStackTrace();
-  } catch (TException x) {
-   x.printStackTrace();
+      transport.close();
+    } catch (TException x) {
+      x.printStackTrace();
+    } 
   }
- }
 
+  private static void perform(MultiplicationService.Client client) throws TException
+  {
+   
+    int product = client.multiply(3,5);
+    System.out.println("3*5=" + product);
+  }
 }
