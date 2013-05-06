@@ -70,11 +70,12 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 			sudo make install
 
 Verify installation
-###################
+--------------------
 
 Now your Thrift installation is completed! To verify that you have succesfully installed Thrift just type ::
 
 	thrift -version
+
 and you should be able to see something like the following: ::
 
 	Thrift version 0.9.0

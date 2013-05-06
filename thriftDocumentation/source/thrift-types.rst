@@ -7,7 +7,7 @@ The thrift type system includes base types like bool, byte, double, string and i
 * If you want to check the Thrift interface description language that allows for the definition of Thrift types you can read here: http://thrift.apache.org/docs/idl/
 
 Base types
-##########
+-----------
 
     * **bool**: A boolean value (true or false)
 
@@ -26,12 +26,13 @@ Base types
 *Note: There is no support for unsigned integer types, due to the fact that there are no native unsigned integer types in many programming languages. Signed integers can be safely cast to their unsigned counterparts when necessary.*
 
 Special Types
-#############
+--------------
 
 **binary**: a sequence of unencoded bytes
 
 Structs
-#######
+--------
+
 A struct has a set of strongly typed fields, each with a unique name identifier. The look very similar to C-like structs. ::
 
 	struct Example {
@@ -42,7 +43,7 @@ A struct has a set of strongly typed fields, each with a unique name identifier.
 	}
 
 Containers
-##########
+-----------
    * **list** (Maps to c++ STL vector, Java ArrayList etc)
 
    * **set** (Maps to an STL set, Java HashSet etc)
@@ -54,7 +55,7 @@ Containers
 All the above are the defaults but can be customized to correspond to different types of any language. For this reason custom code generation directives have been added.
 
 Exceptions
-##########
+-----------
 
 They inherit from the native exception base class as appropriate in each target programming language. ::
 
@@ -65,7 +66,7 @@ They inherit from the native exception base class as appropriate in each target 
 
 
 Services
-########
+--------
 A service consists of a set of named functions, each with a list of parameters and a return type. It is semantically equivalent to defining an interface or a pure virtual abstract class. ::
 
 	service <name> {
