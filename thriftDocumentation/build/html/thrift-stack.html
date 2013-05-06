@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Thrift protocol stack &mdash; Thrift Tutorial 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Thrift Tutorial 1.0 documentation" href="index.html" />
+    <link rel="next" title="Writing a .thrift file" href="thrift-file.html" />
+    <link rel="prev" title="Thrift type system" href="thrift-types.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="thrift-file.html" title="Writing a .thrift file"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="thrift-types.html" title="Thrift type system"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="thrift-protocol-stack">
+<h1>Thrift protocol stack<a class="headerlink" href="#thrift-protocol-stack" title="Permalink to this headline">¶</a></h1>
+<p>To understand Thrift&#8217;s protocol stack I highly recommend to take a look at the white-paper: <a class="reference external" href="http://thrift.apache.org/static/files/thrift-20070401.pdf">http://thrift.apache.org/static/files/thrift-20070401.pdf</a> and to the Thrift Architecture part of this very nice description here: <a class="reference external" href="http://jnb.ociweb.com/jnb/jnbJun2009.html">http://jnb.ociweb.com/jnb/jnbJun2009.html</a> - Part of the following content is directly derived from these sources.
+I will now try to give a briefly present Thrift&#8217;s architecture.</p>
+<div class="figure align-right">
+<a class="reference internal image-reference" href="_images/Apache_Thrift_architecture.png"><img alt="Apache Thrift Architecture." src="_images/Apache_Thrift_architecture.png" style="width: 280.0px; height: 506.1px;" /></a>
+<p class="caption">Thrift Architecture.</p>
+<div class="legend">
+Image from wikipedia.org</div>
+</div>
+<div class="section" id="runtime-library">
+<h2>Runtime Library<a class="headerlink" href="#runtime-library" title="Permalink to this headline">¶</a></h2>
+<p>The protocol and transport layer are part of the runtime library. This means that it is to define a service and change the protocol and transport without recompiling the code.</p>
+<div class="section" id="protocol-layer">
+<h3>Protocol Layer<a class="headerlink" href="#protocol-layer" title="Permalink to this headline">¶</a></h3>
+<p>The protocol layer provides serializationa and deserialization.
+Thrift supports the following protocols :</p>
+<ul class="simple">
+<li>TBinaryProtocol - A straight-forward binary format encoding numeric values as binary, rather than converting to text.</li>
+<li>TCompactProtocol - Very efficient, dense encoding of data (See details below).</li>
+<li>TDenseProtocol - Similar to TCompactProtocol but strips off the meta information from what is transmitted, and adds it back in at the receiver. TDenseProtocol is still experimental and not yet available in the Java implementation.</li>
+<li>TJSONProtocol - Uses JSON for encoding of data.</li>
+<li>TSimpleJSONProtocol - A write-only protocol using JSON. Suitable for parsing by scripting languages</li>
+<li>TDebugProtocol - Uses a human-readable text format to aid in debugging.</li>
+</ul>
+</div>
+<div class="section" id="tranport-layer">
+<h3>Tranport Layer<a class="headerlink" href="#tranport-layer" title="Permalink to this headline">¶</a></h3>
+<p>The transport layer is responsible for reading from and writing to the wire.
+Thrift supports the following:</p>
+<ul class="simple">
+<li>TSocket - Uses blocking socket I/O for transport.</li>
+<li>TFramedTransport - Sends data in frames, where each frame is preceded by a length. This transport is required when using a non-blocking server.</li>
+<li>TFileTransport - This transport writes to a file. While this transport is not included with the Java implementation, it should be simple enough to implement.</li>
+<li>TMemoryTransport - Uses memory for I/O. The Java implementation uses a simple ByteArrayOutputStream internally.</li>
+<li>TZlibTransport - Performs compression using zlib. Used in conjunction with another transport. Not available in the Java implementation.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="processor">
+<h2>Processor<a class="headerlink" href="#processor" title="Permalink to this headline">¶</a></h2>
+<p>The processor takes as arguments an input and an output protocol. Reads data from the input, processes the data throught the Handler specified by the user and then writes the data to the output.</p>
+</div>
+<div class="section" id="supported-servers">
+<h2>Supported Servers<a class="headerlink" href="#supported-servers" title="Permalink to this headline">¶</a></h2>
+<p>A server will be listening for connections to a port and will send the data it receives to the Processor to handle.</p>
+<ul class="simple">
+<li>TSimpleServer - A single-threaded server using std blocking io. Useful for testing.</li>
+<li>TThreadPoolServer - A multi-threaded server using std blocking io.</li>
+<li>TNonblockingServer - A multi-threaded server using non-blocking io (Java implementation uses NIO channels). TFramedTransport must be used with this server.</li>
+</ul>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Thrift protocol stack</a><ul>
+<li><a class="reference internal" href="#runtime-library">Runtime Library</a><ul>
+<li><a class="reference internal" href="#protocol-layer">Protocol Layer</a></li>
+<li><a class="reference internal" href="#tranport-layer">Tranport Layer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#processor">Processor</a></li>
+<li><a class="reference internal" href="#supported-servers">Supported Servers</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="thrift-types.html"
+                        title="previous chapter">Thrift type system</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="thrift-file.html"
+                        title="next chapter">Writing a .thrift file</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/thrift-stack.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="thrift-file.html" title="Writing a .thrift file"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="thrift-types.html" title="Thrift type system"
+             >previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Stratos Dimopoulos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

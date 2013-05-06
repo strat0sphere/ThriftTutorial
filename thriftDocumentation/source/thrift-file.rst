@@ -23,7 +23,7 @@ A simple .thrift file with witch we defined our simple multiplication service fo
 	}
 
 
-In the above file we just define a service to multiply two numbers and return their product to avoid making our first demo hard to undersand.
+In the above file we just define a service to multiply two numbers and return their product to avoid making our first demo hard to understand.
 If you named this file multi.thrift and you want to use java and python all you need to do is to run
 
      .. code-block:: bash

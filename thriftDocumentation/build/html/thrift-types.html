@@ -24,9 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Thrift Tutorial 1.0 documentation" href="index.html" />
-    <link rel="up" title="Introduction to Thrift" href="intro.html" />
-    <link rel="next" title="Thrift Description Language" href="description-language.html" />
-    <link rel="prev" title="Introduction to Thrift" href="intro.html" /> 
+    <link rel="next" title="Writing a .thrift file" href="thrift-file.html" />
+    <link rel="prev" title="Thrift Installation" href="installation.html" /> 
   </head>
   <body>
     <div class="related">
@@ -36,13 +35,12 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="description-language.html" title="Thrift Description Language"
+          <a href="thrift-file.html" title="Writing a .thrift file"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="intro.html" title="Introduction to Thrift"
+          <a href="installation.html" title="Thrift Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li>
-          <li><a href="intro.html" accesskey="U">Introduction to Thrift</a> &raquo;</li> 
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,7 +51,11 @@
             
   <div class="section" id="thrift-type-system">
 <h1>Thrift type system<a class="headerlink" href="#thrift-type-system" title="Permalink to this headline">¶</a></h1>
-<p>The thrift type system includes base types like bool, byte, double, string and integer but also special types like binary and it also supports structs (equivalent to classes but without inheritance) and also containers (list, set, map) that correspond to commonly available interfaces in most programming languages. The type system focuses on key types available in all programming languages and omits types that are specific to only some programming languages. A detailed reference to Thrift type system follows next and more details can be found here: <a class="reference external" href="http://thrift.apache.org/docs/types/">http://thrift.apache.org/docs/types/</a></p>
+<p>The thrift type system includes base types like bool, byte, double, string and integer but also special types like binary and it also supports structs (equivalent to classes but without inheritance) and also containers (list, set, map) that correspond to commonly available interfaces in most programming languages. The type system focuses on key types available in all programming languages and omits types that are specific to only some programming languages.</p>
+<ul class="simple">
+<li>A detailed reference to Thrift type system follows next and more details can be found here: <a class="reference external" href="http://thrift.apache.org/docs/types/">http://thrift.apache.org/docs/types/</a></li>
+<li>If you want to check the Thrift interface description language that allows for the definition of Thrift types you can read here: <a class="reference external" href="http://thrift.apache.org/docs/idl/">http://thrift.apache.org/docs/idl/</a></li>
+</ul>
 <div class="section" id="base-types">
 <h2>Base types<a class="headerlink" href="#base-types" title="Permalink to this headline">¶</a></h2>
 <blockquote>
@@ -106,6 +108,11 @@
 <div class="section" id="exceptions">
 <h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
 <p>They inherit from the native exception base class as appropriate in each target programming language.</p>
+<div class="highlight-python"><pre>exception InvalidOperation {
+1: i32 what,
+2: string why
+}</pre>
+</div>
 </div>
 <div class="section" id="services">
 <h2>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h2>
@@ -152,11 +159,11 @@ void delete(1:i32 key)
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="intro.html"
-                        title="previous chapter">Introduction to Thrift</a></p>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Thrift Installation</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="description-language.html"
-                        title="next chapter">Thrift Description Language</a></p>
+  <p class="topless"><a href="thrift-file.html"
+                        title="next chapter">Writing a .thrift file</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/thrift-types.txt"
@@ -186,13 +193,12 @@ void delete(1:i32 key)
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="description-language.html" title="Thrift Description Language"
+          <a href="thrift-file.html" title="Writing a .thrift file"
              >next</a> |</li>
         <li class="right" >
-          <a href="intro.html" title="Introduction to Thrift"
+          <a href="installation.html" title="Thrift Installation"
              >previous</a> |</li>
-        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li>
-          <li><a href="intro.html" >Introduction to Thrift</a> &raquo;</li> 
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

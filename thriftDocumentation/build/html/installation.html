@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Thrift Installation &mdash; Thrift Tutorial 1.0 documentation</title>
+    <title>Thrift installation &mdash; Thrift Tutorial 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Thrift Tutorial 1.0 documentation" href="index.html" />
-    <link rel="next" title="Writing a .thrift file" href="thrift-file.html" />
-    <link rel="prev" title="Thrift Description Language" href="description-language.html" /> 
+    <link rel="next" title="Thrift type system" href="thrift-types.html" />
+    <link rel="prev" title="Introduction to Thrift" href="intro.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,10 +35,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="thrift-file.html" title="Writing a .thrift file"
+          <a href="thrift-types.html" title="Thrift type system"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="description-language.html" title="Thrift Description Language"
+          <a href="intro.html" title="Introduction to Thrift"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -50,13 +50,13 @@
           <div class="body">
             
   <div class="section" id="thrift-installation">
-<h1>Thrift Installation<a class="headerlink" href="#thrift-installation" title="Permalink to this headline">¶</a></h1>
+<h1>Thrift installation<a class="headerlink" href="#thrift-installation" title="Permalink to this headline">¶</a></h1>
 <p>Detailed information on how to install Thrift can be found here: <a class="reference external" href="http://thrift.apache.org/docs/install/">http://thrift.apache.org/docs/install/</a></p>
 <p>On Ubuntu Linux for example you just need to first install the dependencies and then you are ready to install Thrift.</p>
 <blockquote>
 <div><ol class="arabic">
 <li><dl class="first docutils">
-<dt>Install the languages with witch you plan to use thrift. To use with Java for example, install a Java JDK you prefer. In this demo we are using Oracle JDK 7 for Ubuntu, but you shouldn&#8217;t have problem using the one you like.</dt>
+<dt>Install the languages with witch you plan to use thrift. To use with Java for example, install a Java JDK you prefer. In this demo I am using Oracle JDK 7 for Ubuntu, but you shouldn&#8217;t have problem using the one you like.</dt>
 <dd><ul class="first last">
 <li><p class="first">To use with Java you will also need to install Apache Ant</p>
 <div class="highlight-python"><pre>sudo apt-get install ant</pre>
@@ -120,11 +120,11 @@ Python Library:
 </li>
 <li><p class="first">Here <a class="reference external" href="http://thrift.apache.org/docs/install/ubuntu/">http://thrift.apache.org/docs/install/ubuntu/</a> you can find all the packages you might need to support your desired language in case some of them are missing.</p>
 </li>
-<li><p class="first">On the same directory run make</p>
+<li><p class="first">On the same directory run make to build Thrift</p>
 <div class="highlight-python"><pre>sudo make</pre>
 </div>
 </li>
-<li><p class="first">And lastly run</p>
+<li><p class="first">And finally you are ready to install Thrift by running</p>
 <div class="highlight-python"><pre>sudo make install</pre>
 </div>
 </li>
@@ -133,17 +133,29 @@ Python Library:
 </li>
 </ol>
 </div></blockquote>
+<div class="section" id="verify-installation">
+<h2>Verify installation<a class="headerlink" href="#verify-installation" title="Permalink to this headline">¶</a></h2>
 <p>Now your Thrift installation is completed! To verify that you have succesfully installed Thrift just type</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">thrift</span> <span class="o">-</span><span class="n">version</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>and you should be able to see something like the following: ::</dt>
-<dd>Thrift version 0.9.0</dd>
-</dl>
+<p>and you should be able to see something like the following:</p>
+<div class="highlight-python"><pre>Thrift version 0.9.0</pre>
+</div>
+<p>Additionaly you can go to the tutorial directory and follow the instructions located on the README files on each of the targeted languages directories. For example for JAVA you should be able to verify the following:</p>
+<div class="highlight-python"><pre>thrift/tutorial/java$ file ../../lib/java/build/libthrift-${version}-${release}.jar
+../../lib/java/libthrift.jar: Zip archive data, at least v1.0 to extract
+
+thrift/tutorial/java$ file ../../compiler/cpp/thrift
+../../compiler/cpp/thrift: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.15, not stripped
+
+thrift/tutorial/java$ ls ../../lib/java/build/lib/
+commons-lang-2.5.jar  junit-4.4.jar  servlet-api-2.5.jar  slf4j-api-1.5.8.jar  slf4j-simple-1.5.8.jar</pre>
+</div>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
+</div>
 </div>
 </div>
 
@@ -153,12 +165,22 @@ Python Library:
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Thrift installation</a><ul>
+<li><a class="reference internal" href="#verify-installation">Verify installation</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="description-language.html"
-                        title="previous chapter">Thrift Description Language</a></p>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction to Thrift</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="thrift-file.html"
-                        title="next chapter">Writing a .thrift file</a></p>
+  <p class="topless"><a href="thrift-types.html"
+                        title="next chapter">Thrift type system</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/installation.txt"
@@ -188,10 +210,10 @@ Python Library:
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="thrift-file.html" title="Writing a .thrift file"
+          <a href="thrift-types.html" title="Thrift type system"
              >next</a> |</li>
         <li class="right" >
-          <a href="description-language.html" title="Thrift Description Language"
+          <a href="intro.html" title="Introduction to Thrift"
              >previous</a> |</li>
         <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
       </ul>

@@ -1,11 +1,11 @@
-Thrift Installation
+Thrift installation
 =======================================
 
 Detailed information on how to install Thrift can be found here: http://thrift.apache.org/docs/install/
 
 On Ubuntu Linux for example you just need to first install the dependencies and then you are ready to install Thrift.
 
-	#. Install the languages with witch you plan to use thrift. To use with Java for example, install a Java JDK you prefer. In this demo we are using Oracle JDK 7 for Ubuntu, but you shouldn't have problem using the one you like.
+	#. Install the languages with witch you plan to use thrift. To use with Java for example, install a Java JDK you prefer. In this demo I am using Oracle JDK 7 for Ubuntu, but you shouldn't have problem using the one you like.
 		* To use with Java you will also need to install Apache Ant ::
 		
 			sudo apt-get install ant

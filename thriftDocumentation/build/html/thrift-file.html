@@ -24,7 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Thrift Tutorial 1.0 documentation" href="index.html" />
-    <link rel="prev" title="Thrift Installation" href="installation.html" /> 
+    <link rel="next" title="Thrift by Example" href="usage-example.html" />
+    <link rel="prev" title="Introduction to Thrift" href="thrift-stack.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,7 +35,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="installation.html" title="Thrift Installation"
+          <a href="usage-example.html" title="Thrift by Example"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="thrift-stack.html" title="Introduction to Thrift"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -47,9 +51,101 @@
             
   <div class="section" id="writing-a-thrift-file">
 <h1>Writing a .thrift file<a class="headerlink" href="#writing-a-thrift-file" title="Permalink to this headline">¶</a></h1>
+<p>In a .thrift file you can define the services that your server will implement and that they will be called by any clients.
+The Thrift compiler will read this file and generate source code to be used from the servers and clients you will write.</p>
+<p>A simple .thrift file with witch we defined our simple multiplication service for this demo looks like this:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="n">namespace</span> <span class="n">java</span> <span class="n">tutorial</span>
+<span class="n">namespace</span> <span class="n">py</span> <span class="n">tutorial</span>
+
+<span class="o">/*</span>
+ <span class="n">C</span> <span class="n">like</span> <span class="n">comments</span> <span class="n">are</span> <span class="n">supported</span>
+<span class="o">*/</span>
+<span class="o">//</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">also</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">comment</span>
+
+<span class="n">typedef</span> <span class="n">i32</span> <span class="nb">int</span> <span class="o">//</span> <span class="n">We</span> <span class="n">can</span> <span class="n">use</span> <span class="n">typedef</span> <span class="n">to</span> <span class="n">get</span> <span class="n">pretty</span> <span class="n">names</span> <span class="k">for</span> <span class="n">the</span> <span class="n">types</span> <span class="n">we</span> <span class="n">are</span> <span class="n">using</span>
+<span class="n">service</span> <span class="n">MultiplicationService</span>
+<span class="p">{</span>
+        <span class="nb">int</span> <span class="n">multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nb">int</span> <span class="n">n1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="nb">int</span> <span class="n">n2</span><span class="p">),</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>In the above file we just define a service to multiply two numbers and return their product to avoid making our first demo hard to understand.
+If you named this file multi.thrift and you want to use java and python all you need to do is to run</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre>thrift --gen java multiplication.thrift
+thrift --gen py multiplication.thrift
+</pre></div>
+</div>
+</div></blockquote>
+<p>Thrift will now generate code for you and place it in the gen-java and gen-py directories respectively. Make sure you have saficient rights to write inside the directory. Otherwise you might need to run the above commands as sudo user.</p>
+<ul class="simple">
+<li>Notice in the above file the namespaces we define. They dictate that Thrift should generate a sub-directory named tutorial inside gen-java and gen-py and place the output files there. We could have specified different namespaces for java and python. We could also ommit specifying a namespace. In the latter case the files would be place directly inside the gen-java and gen-py directories.</li>
+<li>Notice also that we can typedef Thrift types with something more easy to remember (i32 with int in this case)</li>
+</ul>
+<p>A more detailed example of how you can specify structs, exceptions and other thrift language constructs inside your definition file is specified on tutorial.thrift file that comes along with your Thrift installation. The file contains descriptive comments and it is self-explanatory. Below we notice its most importand parts.</p>
+<div class="section" id="include-other-thrift-files">
+<h2>Include other .thrift files<a class="headerlink" href="#include-other-thrift-files" title="Permalink to this headline">¶</a></h2>
+<p>Included objects are accessed using the name of the .thrift file as a prefix. i.e. shared.SharedObject</p>
+<div class="highlight-python"><pre>include "shared.thrift"</pre>
+</div>
+<div class="section" id="define-c-style-enumerations">
+<h3>Define C-style enumerations<a class="headerlink" href="#define-c-style-enumerations" title="Permalink to this headline">¶</a></h3>
+<p>Values are optional and start at 1 if not specified.</p>
+<div class="highlight-python"><pre>enum Operation {
+  ADD = 1,
+  SUBTRACT = 2,
+  MULTIPLY = 3,
+  DIVIDE = 4
+}</pre>
+</div>
+</div>
+<div class="section" id="define-structs">
+<h3>Define Structs<a class="headerlink" href="#define-structs" title="Permalink to this headline">¶</a></h3>
+<p>Fields can be declared &#8220;optional&#8221;, which ensures they will not be included in the serialized output if they aren&#8217;t set - This requires some manual management in some languages. Do you notice the numbers before each field type? Fields identifiers is the way Thrift performs versioning. The Thrift definition language supports automatic assignment of field identifiers, but it is good programming practice to always explicitly specify field identifiers. As explained in Thrift&#8217;s whitepaper
+<em>To avoid conflicts between manually and automatically assigned identifiers, fields with identifiers omitted are assigned identifiers decrementing from -1, and the language only supports the manual
+assignment of positive identifiers.</em></p>
+<div class="highlight-python"><pre>struct Work {
+  1: i32 num1 = 0,
+  2: i32 num2,
+  3: Operation op,
+  4: optional string comment,
+}</pre>
+</div>
+</div>
+<div class="section" id="define-exceptions">
+<h3>Define Exceptions<a class="headerlink" href="#define-exceptions" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>exception InvalidOperation {
+  1: i32 what,
+  2: string why
+}</pre>
+</div>
+</div>
+<div class="section" id="define-a-service">
+<h3>Define a Service<a class="headerlink" href="#define-a-service" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><pre>service Calculator extends shared.SharedService {
+
+   void ping(),
+
+   i32 add(1:i32 num1, 2:i32 num2),
+
+   i32 calculate(1:i32 logid, 2:Work w) throws (1:InvalidOperation ouch),
+
+   /**
+    * This method has a oneway modifier. That means the client only makes
+    * a request and does not listen for any response at all. Oneway methods
+    * must be void.
+    */
+   oneway void zip()
+
+}</pre>
+</div>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
+</div>
+</div>
 </div>
 </div>
 
@@ -59,9 +155,28 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Writing a .thrift file</a><ul>
+<li><a class="reference internal" href="#include-other-thrift-files">Include other .thrift files</a><ul>
+<li><a class="reference internal" href="#define-c-style-enumerations">Define C-style enumerations</a></li>
+<li><a class="reference internal" href="#define-structs">Define Structs</a></li>
+<li><a class="reference internal" href="#define-exceptions">Define Exceptions</a></li>
+<li><a class="reference internal" href="#define-a-service">Define a Service</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="installation.html"
-                        title="previous chapter">Thrift Installation</a></p>
+  <p class="topless"><a href="thrift-stack.html"
+                        title="previous chapter">Introduction to Thrift</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usage-example.html"
+                        title="next chapter">Thrift by Example</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/thrift-file.txt"
@@ -91,7 +206,10 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="installation.html" title="Thrift Installation"
+          <a href="usage-example.html" title="Thrift by Example"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="thrift-stack.html" title="Introduction to Thrift"
              >previous</a> |</li>
         <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li> 
       </ul>

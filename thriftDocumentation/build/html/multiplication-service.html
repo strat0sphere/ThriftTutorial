@@ -1,0 +1,2054 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Thrift’s auto-generated code for the multiplication service example &mdash; Thrift Tutorial 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Thrift Tutorial 1.0 documentation" href="index.html" />
+    <link rel="up" title="Thrift by Example" href="usage-example.html" />
+    <link rel="prev" title="Thrift by Example" href="usage-example.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="usage-example.html" title="Thrift by Example"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li>
+          <li><a href="usage-example.html" accesskey="U">Thrift by Example</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="thrift-s-auto-generated-code-for-the-multiplication-service-example">
+<h1>Thrift&#8217;s auto-generated code for the multiplication service example<a class="headerlink" href="#thrift-s-auto-generated-code-for-the-multiplication-service-example" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><div class="highlight-java"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850
+851
+852
+853
+854
+855
+856
+857
+858
+859
+860
+861
+862
+863
+864
+865
+866
+867
+868
+869
+870
+871
+872
+873
+874
+875
+876
+877
+878
+879
+880
+881
+882
+883
+884
+885
+886
+887
+888
+889
+890
+891
+892
+893
+894
+895
+896
+897
+898
+899
+900
+901
+902
+903
+904
+905
+906
+907
+908
+909
+910
+911
+912
+913
+914
+915
+916
+917
+918
+919
+920
+921
+922
+923
+924
+925
+926
+927
+928
+929
+930
+931
+932
+933
+934
+935
+936
+937
+938
+939
+940
+941
+942
+943
+944
+945
+946
+947
+948
+949
+950
+951
+952
+953
+954
+955
+956
+957
+958
+959
+960
+961
+962
+963
+964
+965
+966
+967
+968
+969
+970
+971
+972
+973
+974</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Autogenerated by Thrift Compiler (0.9.0)</span>
+<span class="cm"> *</span>
+<span class="cm"> * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING</span>
+<span class="cm"> *  @generated</span>
+<span class="cm"> */</span>
+<span class="kn">import</span> <span class="nn">java.util.BitSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.EnumMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.EnumSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.thrift.EncodingUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.thrift.protocol.TTupleProtocol</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.thrift.scheme.IScheme</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.thrift.scheme.SchemeFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.thrift.scheme.StandardScheme</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.thrift.scheme.TupleScheme</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MultiplicationService</span> <span class="o">{</span>
+
+  <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Iface</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">multiply</span><span class="o">(</span><span class="kt">int</span> <span class="n">n1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span><span class="o">;</span>
+
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">AsyncIface</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">multiply</span><span class="o">(</span><span class="kt">int</span> <span class="n">n1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">AsyncMethodCallback</span><span class="o">&lt;</span><span class="n">AsyncClient</span><span class="o">.</span><span class="na">multiply_call</span><span class="o">&gt;</span> <span class="n">resultHandler</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span><span class="o">;</span>
+
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="kd">extends</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TServiceClient</span> <span class="kd">implements</span> <span class="n">Iface</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Factory</span> <span class="kd">implements</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TServiceClientFactory</span><span class="o">&lt;</span><span class="n">Client</span><span class="o">&gt;</span> <span class="o">{</span>
+      <span class="kd">public</span> <span class="nf">Factory</span><span class="o">()</span> <span class="o">{}</span>
+      <span class="kd">public</span> <span class="n">Client</span> <span class="nf">getClient</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">prot</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Client</span><span class="o">(</span><span class="n">prot</span><span class="o">);</span>
+      <span class="o">}</span>
+      <span class="kd">public</span> <span class="n">Client</span> <span class="nf">getClient</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">iprot</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">oprot</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Client</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="n">oprot</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">Client</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">prot</span><span class="o">)</span>
+    <span class="o">{</span>
+      <span class="kd">super</span><span class="o">(</span><span class="n">prot</span><span class="o">,</span> <span class="n">prot</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">Client</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">iprot</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">oprot</span><span class="o">)</span> <span class="o">{</span>
+      <span class="kd">super</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="n">oprot</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">multiply</span><span class="o">(</span><span class="kt">int</span> <span class="n">n1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span>
+    <span class="o">{</span>
+      <span class="n">send_multiply</span><span class="o">(</span><span class="n">n1</span><span class="o">,</span> <span class="n">n2</span><span class="o">);</span>
+      <span class="k">return</span> <span class="nf">recv_multiply</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">send_multiply</span><span class="o">(</span><span class="kt">int</span> <span class="n">n1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span>
+    <span class="o">{</span>
+      <span class="n">multiply_args</span> <span class="n">args</span> <span class="o">=</span> <span class="k">new</span> <span class="n">multiply_args</span><span class="o">();</span>
+      <span class="n">args</span><span class="o">.</span><span class="na">setN1</span><span class="o">(</span><span class="n">n1</span><span class="o">);</span>
+      <span class="n">args</span><span class="o">.</span><span class="na">setN2</span><span class="o">(</span><span class="n">n2</span><span class="o">);</span>
+      <span class="n">sendBase</span><span class="o">(</span><span class="s">&quot;multiply&quot;</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">recv_multiply</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span>
+    <span class="o">{</span>
+      <span class="n">multiply_result</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">multiply_result</span><span class="o">();</span>
+      <span class="n">receiveBase</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="s">&quot;multiply&quot;</span><span class="o">);</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">isSetSuccess</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="na">success</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TApplicationException</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TApplicationException</span><span class="o">.</span><span class="na">MISSING_RESULT</span><span class="o">,</span> <span class="s">&quot;multiply failed: unknown result&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+  <span class="o">}</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">AsyncClient</span> <span class="kd">extends</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">TAsyncClient</span> <span class="kd">implements</span> <span class="n">AsyncIface</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Factory</span> <span class="kd">implements</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">TAsyncClientFactory</span><span class="o">&lt;</span><span class="n">AsyncClient</span><span class="o">&gt;</span> <span class="o">{</span>
+      <span class="kd">private</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">TAsyncClientManager</span> <span class="n">clientManager</span><span class="o">;</span>
+      <span class="kd">private</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolFactory</span> <span class="n">protocolFactory</span><span class="o">;</span>
+      <span class="kd">public</span> <span class="nf">Factory</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">TAsyncClientManager</span> <span class="n">clientManager</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolFactory</span> <span class="n">protocolFactory</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">clientManager</span> <span class="o">=</span> <span class="n">clientManager</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">protocolFactory</span> <span class="o">=</span> <span class="n">protocolFactory</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="kd">public</span> <span class="n">AsyncClient</span> <span class="nf">getAsyncClient</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TNonblockingTransport</span> <span class="n">transport</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">AsyncClient</span><span class="o">(</span><span class="n">protocolFactory</span><span class="o">,</span> <span class="n">clientManager</span><span class="o">,</span> <span class="n">transport</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">AsyncClient</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolFactory</span> <span class="n">protocolFactory</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">TAsyncClientManager</span> <span class="n">clientManager</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TNonblockingTransport</span> <span class="n">transport</span><span class="o">)</span> <span class="o">{</span>
+      <span class="kd">super</span><span class="o">(</span><span class="n">protocolFactory</span><span class="o">,</span> <span class="n">clientManager</span><span class="o">,</span> <span class="n">transport</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">multiply</span><span class="o">(</span><span class="kt">int</span> <span class="n">n1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">AsyncMethodCallback</span><span class="o">&lt;</span><span class="n">multiply_call</span><span class="o">&gt;</span> <span class="n">resultHandler</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+      <span class="n">checkReady</span><span class="o">();</span>
+      <span class="n">multiply_call</span> <span class="n">method_call</span> <span class="o">=</span> <span class="k">new</span> <span class="n">multiply_call</span><span class="o">(</span><span class="n">n1</span><span class="o">,</span> <span class="n">n2</span><span class="o">,</span> <span class="n">resultHandler</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="n">___protocolFactory</span><span class="o">,</span> <span class="n">___transport</span><span class="o">);</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">___currentMethod</span> <span class="o">=</span> <span class="n">method_call</span><span class="o">;</span>
+      <span class="n">___manager</span><span class="o">.</span><span class="na">call</span><span class="o">(</span><span class="n">method_call</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_call</span> <span class="kd">extends</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">TAsyncMethodCall</span> <span class="o">{</span>
+      <span class="kd">private</span> <span class="kt">int</span> <span class="n">n1</span><span class="o">;</span>
+      <span class="kd">private</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">;</span>
+      <span class="kd">public</span> <span class="nf">multiply_call</span><span class="o">(</span><span class="kt">int</span> <span class="n">n1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">AsyncMethodCallback</span><span class="o">&lt;</span><span class="n">multiply_call</span><span class="o">&gt;</span> <span class="n">resultHandler</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">TAsyncClient</span> <span class="n">client</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolFactory</span> <span class="n">protocolFactory</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TNonblockingTransport</span> <span class="n">transport</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">client</span><span class="o">,</span> <span class="n">protocolFactory</span><span class="o">,</span> <span class="n">transport</span><span class="o">,</span> <span class="n">resultHandler</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">n1</span> <span class="o">=</span> <span class="n">n1</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">n2</span> <span class="o">=</span> <span class="n">n2</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">write_args</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">prot</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">prot</span><span class="o">.</span><span class="na">writeMessageBegin</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TMessage</span><span class="o">(</span><span class="s">&quot;multiply&quot;</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TMessageType</span><span class="o">.</span><span class="na">CALL</span><span class="o">,</span> <span class="mi">0</span><span class="o">));</span>
+        <span class="n">multiply_args</span> <span class="n">args</span> <span class="o">=</span> <span class="k">new</span> <span class="n">multiply_args</span><span class="o">();</span>
+        <span class="n">args</span><span class="o">.</span><span class="na">setN1</span><span class="o">(</span><span class="n">n1</span><span class="o">);</span>
+        <span class="n">args</span><span class="o">.</span><span class="na">setN2</span><span class="o">(</span><span class="n">n2</span><span class="o">);</span>
+        <span class="n">args</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">prot</span><span class="o">);</span>
+        <span class="n">prot</span><span class="o">.</span><span class="na">writeMessageEnd</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getResult</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">getState</span><span class="o">()</span> <span class="o">!=</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">async</span><span class="o">.</span><span class="na">TAsyncMethodCall</span><span class="o">.</span><span class="na">State</span><span class="o">.</span><span class="na">RESPONSE_READ</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">(</span><span class="s">&quot;Method call not finished!&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TMemoryInputTransport</span> <span class="n">memoryTransport</span> <span class="o">=</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TMemoryInputTransport</span><span class="o">(</span><span class="n">getFrameBuffer</span><span class="o">().</span><span class="na">array</span><span class="o">());</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">prot</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getProtocolFactory</span><span class="o">().</span><span class="na">getProtocol</span><span class="o">(</span><span class="n">memoryTransport</span><span class="o">);</span>
+        <span class="k">return</span> <span class="o">(</span><span class="k">new</span> <span class="n">Client</span><span class="o">(</span><span class="n">prot</span><span class="o">)).</span><span class="na">recv_multiply</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Processor</span><span class="o">&lt;</span><span class="n">I</span> <span class="kd">extends</span> <span class="n">Iface</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBaseProcessor</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TProcessor</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">LOGGER</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Processor</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="kd">public</span> <span class="nf">Processor</span><span class="o">(</span><span class="n">I</span> <span class="n">iface</span><span class="o">)</span> <span class="o">{</span>
+      <span class="kd">super</span><span class="o">(</span><span class="n">iface</span><span class="o">,</span> <span class="n">getProcessMap</span><span class="o">(</span><span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">ProcessFunction</span><span class="o">&lt;</span><span class="n">I</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBase</span><span class="o">&gt;&gt;()));</span>
+    <span class="o">}</span>
+
+    <span class="kd">protected</span> <span class="nf">Processor</span><span class="o">(</span><span class="n">I</span> <span class="n">iface</span><span class="o">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span>  <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">ProcessFunction</span><span class="o">&lt;</span><span class="n">I</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span>  <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBase</span><span class="o">&gt;&gt;</span> <span class="n">processMap</span><span class="o">)</span> <span class="o">{</span>
+      <span class="kd">super</span><span class="o">(</span><span class="n">iface</span><span class="o">,</span> <span class="n">getProcessMap</span><span class="o">(</span><span class="n">processMap</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">I</span> <span class="kd">extends</span> <span class="n">Iface</span><span class="o">&gt;</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span>  <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">ProcessFunction</span><span class="o">&lt;</span><span class="n">I</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span>  <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBase</span><span class="o">&gt;&gt;</span> <span class="n">getProcessMap</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span>  <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">ProcessFunction</span><span class="o">&lt;</span><span class="n">I</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span>  <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBase</span><span class="o">&gt;&gt;</span> <span class="n">processMap</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">processMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;multiply&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">multiply</span><span class="o">());</span>
+      <span class="k">return</span> <span class="n">processMap</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply</span><span class="o">&lt;</span><span class="n">I</span> <span class="kd">extends</span> <span class="n">Iface</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">ProcessFunction</span><span class="o">&lt;</span><span class="n">I</span><span class="o">,</span> <span class="n">multiply_args</span><span class="o">&gt;</span> <span class="o">{</span>
+      <span class="kd">public</span> <span class="nf">multiply</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="s">&quot;multiply&quot;</span><span class="o">);</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="n">multiply_args</span> <span class="nf">getEmptyArgsInstance</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">multiply_args</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">isOneway</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="n">multiply_result</span> <span class="nf">getResult</span><span class="o">(</span><span class="n">I</span> <span class="n">iface</span><span class="o">,</span> <span class="n">multiply_args</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">multiply_result</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">multiply_result</span><span class="o">();</span>
+        <span class="n">result</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="na">multiply</span><span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">n1</span><span class="o">,</span> <span class="n">args</span><span class="o">.</span><span class="na">n2</span><span class="o">);</span>
+        <span class="n">result</span><span class="o">.</span><span class="na">setSuccessIsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_args</span> <span class="kd">implements</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBase</span><span class="o">&lt;</span><span class="n">multiply_args</span><span class="o">,</span> <span class="n">multiply_args</span><span class="o">.</span><span class="na">_Fields</span><span class="o">&gt;,</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">Serializable</span><span class="o">,</span> <span class="n">Cloneable</span>   <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TStruct</span> <span class="n">STRUCT_DESC</span> <span class="o">=</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TStruct</span><span class="o">(</span><span class="s">&quot;multiply_args&quot;</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TField</span> <span class="n">N1_FIELD_DESC</span> <span class="o">=</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TField</span><span class="o">(</span><span class="s">&quot;n1&quot;</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span><span class="o">,</span> <span class="o">(</span><span class="kt">short</span><span class="o">)</span><span class="mi">1</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TField</span> <span class="n">N2_FIELD_DESC</span> <span class="o">=</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TField</span><span class="o">(</span><span class="s">&quot;n2&quot;</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span><span class="o">,</span> <span class="o">(</span><span class="kt">short</span><span class="o">)</span><span class="mi">2</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">IScheme</span><span class="o">&gt;,</span> <span class="n">SchemeFactory</span><span class="o">&gt;</span> <span class="n">schemes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">IScheme</span><span class="o">&gt;,</span> <span class="n">SchemeFactory</span><span class="o">&gt;();</span>
+    <span class="kd">static</span> <span class="o">{</span>
+      <span class="n">schemes</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">StandardScheme</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="k">new</span> <span class="n">multiply_argsStandardSchemeFactory</span><span class="o">());</span>
+      <span class="n">schemes</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">TupleScheme</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="k">new</span> <span class="n">multiply_argsTupleSchemeFactory</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="n">n1</span><span class="o">;</span> <span class="c1">// required</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="n">n2</span><span class="o">;</span> <span class="c1">// required</span>
+
+    <span class="cm">/** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */</span>
+    <span class="kd">public</span> <span class="kd">enum</span> <span class="n">_Fields</span> <span class="kd">implements</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TFieldIdEnum</span> <span class="o">{</span>
+      <span class="n">N1</span><span class="o">((</span><span class="kt">short</span><span class="o">)</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;n1&quot;</span><span class="o">),</span>
+      <span class="n">N2</span><span class="o">((</span><span class="kt">short</span><span class="o">)</span><span class="mi">2</span><span class="o">,</span> <span class="s">&quot;n2&quot;</span><span class="o">);</span>
+
+      <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">_Fields</span><span class="o">&gt;</span> <span class="n">byName</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">_Fields</span><span class="o">&gt;();</span>
+
+      <span class="kd">static</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">_Fields</span> <span class="n">field</span> <span class="o">:</span> <span class="n">EnumSet</span><span class="o">.</span><span class="na">allOf</span><span class="o">(</span><span class="n">_Fields</span><span class="o">.</span><span class="na">class</span><span class="o">))</span> <span class="o">{</span>
+          <span class="n">byName</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">field</span><span class="o">.</span><span class="na">getFieldName</span><span class="o">(),</span> <span class="n">field</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+
+      <span class="cm">/**</span>
+<span class="cm">       * Find the _Fields constant that matches fieldId, or null if its not found.</span>
+<span class="cm">       */</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="n">_Fields</span> <span class="nf">findByThriftId</span><span class="o">(</span><span class="kt">int</span> <span class="n">fieldId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">switch</span><span class="o">(</span><span class="n">fieldId</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="c1">// N1</span>
+            <span class="k">return</span> <span class="n">N1</span><span class="o">;</span>
+          <span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="c1">// N2</span>
+            <span class="k">return</span> <span class="n">N2</span><span class="o">;</span>
+          <span class="k">default</span><span class="o">:</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+
+      <span class="cm">/**</span>
+<span class="cm">       * Find the _Fields constant that matches fieldId, throwing an exception</span>
+<span class="cm">       * if it is not found.</span>
+<span class="cm">       */</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="n">_Fields</span> <span class="nf">findByThriftIdOrThrow</span><span class="o">(</span><span class="kt">int</span> <span class="n">fieldId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">_Fields</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">findByThriftId</span><span class="o">(</span><span class="n">fieldId</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">fields</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">(</span><span class="s">&quot;Field &quot;</span> <span class="o">+</span> <span class="n">fieldId</span> <span class="o">+</span> <span class="s">&quot; doesn&#39;t exist!&quot;</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">fields</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="cm">/**</span>
+<span class="cm">       * Find the _Fields constant that matches name, or null if its not found.</span>
+<span class="cm">       */</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="n">_Fields</span> <span class="nf">findByName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">byName</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+      <span class="o">}</span>
+
+      <span class="kd">private</span> <span class="kd">final</span> <span class="kt">short</span> <span class="n">_thriftId</span><span class="o">;</span>
+      <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">_fieldName</span><span class="o">;</span>
+
+      <span class="n">_Fields</span><span class="o">(</span><span class="kt">short</span> <span class="n">thriftId</span><span class="o">,</span> <span class="n">String</span> <span class="n">fieldName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">_thriftId</span> <span class="o">=</span> <span class="n">thriftId</span><span class="o">;</span>
+        <span class="n">_fieldName</span> <span class="o">=</span> <span class="n">fieldName</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="kt">short</span> <span class="nf">getThriftFieldId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">_thriftId</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="n">String</span> <span class="nf">getFieldName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">_fieldName</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// isset id assignments</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">__N1_ISSET_ID</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">__N2_ISSET_ID</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">byte</span> <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">_Fields</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">&gt;</span> <span class="n">metaDataMap</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="o">{</span>
+      <span class="n">Map</span><span class="o">&lt;</span><span class="n">_Fields</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">&gt;</span> <span class="n">tmpMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EnumMap</span><span class="o">&lt;</span><span class="n">_Fields</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">&gt;(</span><span class="n">_Fields</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+      <span class="n">tmpMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">_Fields</span><span class="o">.</span><span class="na">N1</span><span class="o">,</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">(</span><span class="s">&quot;n1&quot;</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TFieldRequirementType</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">,</span> 
+          <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldValueMetaData</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span>          <span class="o">,</span> <span class="s">&quot;int&quot;</span><span class="o">)));</span>
+      <span class="n">tmpMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">_Fields</span><span class="o">.</span><span class="na">N2</span><span class="o">,</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">(</span><span class="s">&quot;n2&quot;</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TFieldRequirementType</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">,</span> 
+          <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldValueMetaData</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span>          <span class="o">,</span> <span class="s">&quot;int&quot;</span><span class="o">)));</span>
+      <span class="n">metaDataMap</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableMap</span><span class="o">(</span><span class="n">tmpMap</span><span class="o">);</span>
+      <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">.</span><span class="na">addStructMetaDataMap</span><span class="o">(</span><span class="n">multiply_args</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">metaDataMap</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">multiply_args</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">multiply_args</span><span class="o">(</span>
+      <span class="kt">int</span> <span class="n">n1</span><span class="o">,</span>
+      <span class="kt">int</span> <span class="n">n2</span><span class="o">)</span>
+    <span class="o">{</span>
+      <span class="k">this</span><span class="o">();</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">n1</span> <span class="o">=</span> <span class="n">n1</span><span class="o">;</span>
+      <span class="n">setN1IsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">n2</span> <span class="o">=</span> <span class="n">n2</span><span class="o">;</span>
+      <span class="n">setN2IsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Performs a deep copy on &lt;i&gt;other&lt;/i&gt;.</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">multiply_args</span><span class="o">(</span><span class="n">multiply_args</span> <span class="n">other</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="na">__isset_bitfield</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">n1</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="na">n1</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">n2</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="na">n2</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">multiply_args</span> <span class="nf">deepCopy</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nf">multiply_args</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">setN1IsSet</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">n1</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">setN2IsSet</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">n2</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getN1</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">n1</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">multiply_args</span> <span class="nf">setN1</span><span class="o">(</span><span class="kt">int</span> <span class="n">n1</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">n1</span> <span class="o">=</span> <span class="n">n1</span><span class="o">;</span>
+      <span class="n">setN1IsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">unsetN1</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">clearBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__N1_ISSET_ID</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Returns true if field n1 is set (has been assigned a value) and false otherwise */</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSetN1</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">testBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__N1_ISSET_ID</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setN1IsSet</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">setBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__N1_ISSET_ID</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getN2</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">n2</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">multiply_args</span> <span class="nf">setN2</span><span class="o">(</span><span class="kt">int</span> <span class="n">n2</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">n2</span> <span class="o">=</span> <span class="n">n2</span><span class="o">;</span>
+      <span class="n">setN2IsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">unsetN2</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">clearBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__N2_ISSET_ID</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Returns true if field n2 is set (has been assigned a value) and false otherwise */</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSetN2</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">testBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__N2_ISSET_ID</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setN2IsSet</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">setBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__N2_ISSET_ID</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setFieldValue</span><span class="o">(</span><span class="n">_Fields</span> <span class="n">field</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">switch</span> <span class="o">(</span><span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nl">N1:</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">unsetN1</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+          <span class="n">setN1</span><span class="o">((</span><span class="n">Integer</span><span class="o">)</span><span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">break</span><span class="o">;</span>
+
+      <span class="k">case</span> <span class="nl">N2:</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">unsetN2</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+          <span class="n">setN2</span><span class="o">((</span><span class="n">Integer</span><span class="o">)</span><span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">break</span><span class="o">;</span>
+
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getFieldValue</span><span class="o">(</span><span class="n">_Fields</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">switch</span> <span class="o">(</span><span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nl">N1:</span>
+        <span class="k">return</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">getN1</span><span class="o">());</span>
+
+      <span class="k">case</span> <span class="nl">N2:</span>
+        <span class="k">return</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">getN2</span><span class="o">());</span>
+
+      <span class="o">}</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSet</span><span class="o">(</span><span class="n">_Fields</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">field</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="k">switch</span> <span class="o">(</span><span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nl">N1:</span>
+        <span class="k">return</span> <span class="nf">isSetN1</span><span class="o">();</span>
+      <span class="k">case</span> <span class="nl">N2:</span>
+        <span class="k">return</span> <span class="nf">isSetN2</span><span class="o">();</span>
+      <span class="o">}</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">that</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">that</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">that</span> <span class="k">instanceof</span> <span class="n">multiply_args</span><span class="o">)</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">equals</span><span class="o">((</span><span class="n">multiply_args</span><span class="o">)</span><span class="n">that</span><span class="o">);</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">multiply_args</span> <span class="n">that</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">that</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+
+      <span class="kt">boolean</span> <span class="n">this_present_n1</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+      <span class="kt">boolean</span> <span class="n">that_present_n1</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">this_present_n1</span> <span class="o">||</span> <span class="n">that_present_n1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!(</span><span class="n">this_present_n1</span> <span class="o">&amp;&amp;</span> <span class="n">that_present_n1</span><span class="o">))</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">n1</span> <span class="o">!=</span> <span class="n">that</span><span class="o">.</span><span class="na">n1</span><span class="o">)</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kt">boolean</span> <span class="n">this_present_n2</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+      <span class="kt">boolean</span> <span class="n">that_present_n2</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">this_present_n2</span> <span class="o">||</span> <span class="n">that_present_n2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!(</span><span class="n">this_present_n2</span> <span class="o">&amp;&amp;</span> <span class="n">that_present_n2</span><span class="o">))</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">n2</span> <span class="o">!=</span> <span class="n">that</span><span class="o">.</span><span class="na">n2</span><span class="o">)</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">multiply_args</span> <span class="n">other</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(!</span><span class="n">getClass</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">other</span><span class="o">.</span><span class="na">getClass</span><span class="o">()))</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">().</span><span class="na">compareTo</span><span class="o">(</span><span class="n">other</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+      <span class="o">}</span>
+
+      <span class="kt">int</span> <span class="n">lastComparison</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">multiply_args</span> <span class="n">typedOther</span> <span class="o">=</span> <span class="o">(</span><span class="n">multiply_args</span><span class="o">)</span><span class="n">other</span><span class="o">;</span>
+
+      <span class="n">lastComparison</span> <span class="o">=</span> <span class="n">Boolean</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">isSetN1</span><span class="o">()).</span><span class="na">compareTo</span><span class="o">(</span><span class="n">typedOther</span><span class="o">.</span><span class="na">isSetN1</span><span class="o">());</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">lastComparison</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">lastComparison</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">isSetN1</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">lastComparison</span> <span class="o">=</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBaseHelper</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">n1</span><span class="o">,</span> <span class="n">typedOther</span><span class="o">.</span><span class="na">n1</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">lastComparison</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="n">lastComparison</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+      <span class="n">lastComparison</span> <span class="o">=</span> <span class="n">Boolean</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">isSetN2</span><span class="o">()).</span><span class="na">compareTo</span><span class="o">(</span><span class="n">typedOther</span><span class="o">.</span><span class="na">isSetN2</span><span class="o">());</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">lastComparison</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">lastComparison</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">isSetN2</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">lastComparison</span> <span class="o">=</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBaseHelper</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">n2</span><span class="o">,</span> <span class="n">typedOther</span><span class="o">.</span><span class="na">n2</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">lastComparison</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="n">lastComparison</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">_Fields</span> <span class="nf">fieldForId</span><span class="o">(</span><span class="kt">int</span> <span class="n">fieldId</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">_Fields</span><span class="o">.</span><span class="na">findByThriftId</span><span class="o">(</span><span class="n">fieldId</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">read</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">iprot</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+      <span class="n">schemes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">iprot</span><span class="o">.</span><span class="na">getScheme</span><span class="o">()).</span><span class="na">getScheme</span><span class="o">().</span><span class="na">read</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">oprot</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+      <span class="n">schemes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">oprot</span><span class="o">.</span><span class="na">getScheme</span><span class="o">()).</span><span class="na">getScheme</span><span class="o">().</span><span class="na">write</span><span class="o">(</span><span class="n">oprot</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&quot;multiply_args(&quot;</span><span class="o">);</span>
+      <span class="kt">boolean</span> <span class="n">first</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+      <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;n1:&quot;</span><span class="o">);</span>
+      <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">n1</span><span class="o">);</span>
+      <span class="n">first</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="k">if</span> <span class="o">(!</span><span class="n">first</span><span class="o">)</span> <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;, &quot;</span><span class="o">);</span>
+      <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;n2:&quot;</span><span class="o">);</span>
+      <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">n2</span><span class="o">);</span>
+      <span class="n">first</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;)&quot;</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">validate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+      <span class="c1">// check for required fields</span>
+      <span class="c1">// check for sub-struct validity</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">writeObject</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">ObjectOutputStream</span> <span class="n">out</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+        <span class="n">write</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TCompactProtocol</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TIOStreamTransport</span><span class="o">(</span><span class="n">out</span><span class="o">)));</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="n">te</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span><span class="o">(</span><span class="n">te</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">readObject</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">ObjectInputStream</span> <span class="n">in</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span><span class="o">,</span> <span class="n">ClassNotFoundException</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+        <span class="c1">// it doesn&#39;t seem like you should have to do this, but java serialization is wacky, and doesn&#39;t call the default constructor.</span>
+        <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="n">read</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TCompactProtocol</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TIOStreamTransport</span><span class="o">(</span><span class="n">in</span><span class="o">)));</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="n">te</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span><span class="o">(</span><span class="n">te</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_argsStandardSchemeFactory</span> <span class="kd">implements</span> <span class="n">SchemeFactory</span> <span class="o">{</span>
+      <span class="kd">public</span> <span class="n">multiply_argsStandardScheme</span> <span class="nf">getScheme</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">multiply_argsStandardScheme</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_argsStandardScheme</span> <span class="kd">extends</span> <span class="n">StandardScheme</span><span class="o">&lt;</span><span class="n">multiply_args</span><span class="o">&gt;</span> <span class="o">{</span>
+
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">read</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">iprot</span><span class="o">,</span> <span class="n">multiply_args</span> <span class="n">struct</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TField</span> <span class="n">schemeField</span><span class="o">;</span>
+        <span class="n">iprot</span><span class="o">.</span><span class="na">readStructBegin</span><span class="o">();</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+        <span class="o">{</span>
+          <span class="n">schemeField</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readFieldBegin</span><span class="o">();</span>
+          <span class="k">if</span> <span class="o">(</span><span class="n">schemeField</span><span class="o">.</span><span class="na">type</span> <span class="o">==</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">STOP</span><span class="o">)</span> <span class="o">{</span> 
+            <span class="k">break</span><span class="o">;</span>
+          <span class="o">}</span>
+          <span class="k">switch</span> <span class="o">(</span><span class="n">schemeField</span><span class="o">.</span><span class="na">id</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="c1">// N1</span>
+              <span class="k">if</span> <span class="o">(</span><span class="n">schemeField</span><span class="o">.</span><span class="na">type</span> <span class="o">==</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">struct</span><span class="o">.</span><span class="na">n1</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readI32</span><span class="o">();</span>
+                <span class="n">struct</span><span class="o">.</span><span class="na">setN1IsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+              <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> 
+                <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolUtil</span><span class="o">.</span><span class="na">skip</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="n">schemeField</span><span class="o">.</span><span class="na">type</span><span class="o">);</span>
+              <span class="o">}</span>
+              <span class="k">break</span><span class="o">;</span>
+            <span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="c1">// N2</span>
+              <span class="k">if</span> <span class="o">(</span><span class="n">schemeField</span><span class="o">.</span><span class="na">type</span> <span class="o">==</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">struct</span><span class="o">.</span><span class="na">n2</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readI32</span><span class="o">();</span>
+                <span class="n">struct</span><span class="o">.</span><span class="na">setN2IsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+              <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> 
+                <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolUtil</span><span class="o">.</span><span class="na">skip</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="n">schemeField</span><span class="o">.</span><span class="na">type</span><span class="o">);</span>
+              <span class="o">}</span>
+              <span class="k">break</span><span class="o">;</span>
+            <span class="k">default</span><span class="o">:</span>
+              <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolUtil</span><span class="o">.</span><span class="na">skip</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="n">schemeField</span><span class="o">.</span><span class="na">type</span><span class="o">);</span>
+          <span class="o">}</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="na">readFieldEnd</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">iprot</span><span class="o">.</span><span class="na">readStructEnd</span><span class="o">();</span>
+
+        <span class="c1">// check for required fields of primitive type, which can&#39;t be checked in the validate method</span>
+        <span class="n">struct</span><span class="o">.</span><span class="na">validate</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">oprot</span><span class="o">,</span> <span class="n">multiply_args</span> <span class="n">struct</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">struct</span><span class="o">.</span><span class="na">validate</span><span class="o">();</span>
+
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeStructBegin</span><span class="o">(</span><span class="n">STRUCT_DESC</span><span class="o">);</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeFieldBegin</span><span class="o">(</span><span class="n">N1_FIELD_DESC</span><span class="o">);</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeI32</span><span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">n1</span><span class="o">);</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeFieldEnd</span><span class="o">();</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeFieldBegin</span><span class="o">(</span><span class="n">N2_FIELD_DESC</span><span class="o">);</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeI32</span><span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">n2</span><span class="o">);</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeFieldEnd</span><span class="o">();</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeFieldStop</span><span class="o">();</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeStructEnd</span><span class="o">();</span>
+      <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_argsTupleSchemeFactory</span> <span class="kd">implements</span> <span class="n">SchemeFactory</span> <span class="o">{</span>
+      <span class="kd">public</span> <span class="n">multiply_argsTupleScheme</span> <span class="nf">getScheme</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">multiply_argsTupleScheme</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_argsTupleScheme</span> <span class="kd">extends</span> <span class="n">TupleScheme</span><span class="o">&lt;</span><span class="n">multiply_args</span><span class="o">&gt;</span> <span class="o">{</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">prot</span><span class="o">,</span> <span class="n">multiply_args</span> <span class="n">struct</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">TTupleProtocol</span> <span class="n">oprot</span> <span class="o">=</span> <span class="o">(</span><span class="n">TTupleProtocol</span><span class="o">)</span> <span class="n">prot</span><span class="o">;</span>
+        <span class="n">BitSet</span> <span class="n">optionals</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BitSet</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">isSetN1</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">optionals</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">isSetN2</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">optionals</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeBitSet</span><span class="o">(</span><span class="n">optionals</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">isSetN1</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">oprot</span><span class="o">.</span><span class="na">writeI32</span><span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">n1</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">isSetN2</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">oprot</span><span class="o">.</span><span class="na">writeI32</span><span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">n2</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">read</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">prot</span><span class="o">,</span> <span class="n">multiply_args</span> <span class="n">struct</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">TTupleProtocol</span> <span class="n">iprot</span> <span class="o">=</span> <span class="o">(</span><span class="n">TTupleProtocol</span><span class="o">)</span> <span class="n">prot</span><span class="o">;</span>
+        <span class="n">BitSet</span> <span class="n">incoming</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readBitSet</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">incoming</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">{</span>
+          <span class="n">struct</span><span class="o">.</span><span class="na">n1</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readI32</span><span class="o">();</span>
+          <span class="n">struct</span><span class="o">.</span><span class="na">setN1IsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">incoming</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">{</span>
+          <span class="n">struct</span><span class="o">.</span><span class="na">n2</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readI32</span><span class="o">();</span>
+          <span class="n">struct</span><span class="o">.</span><span class="na">setN2IsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_result</span> <span class="kd">implements</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBase</span><span class="o">&lt;</span><span class="n">multiply_result</span><span class="o">,</span> <span class="n">multiply_result</span><span class="o">.</span><span class="na">_Fields</span><span class="o">&gt;,</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">Serializable</span><span class="o">,</span> <span class="n">Cloneable</span>   <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TStruct</span> <span class="n">STRUCT_DESC</span> <span class="o">=</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TStruct</span><span class="o">(</span><span class="s">&quot;multiply_result&quot;</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TField</span> <span class="n">SUCCESS_FIELD_DESC</span> <span class="o">=</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TField</span><span class="o">(</span><span class="s">&quot;success&quot;</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span><span class="o">,</span> <span class="o">(</span><span class="kt">short</span><span class="o">)</span><span class="mi">0</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">IScheme</span><span class="o">&gt;,</span> <span class="n">SchemeFactory</span><span class="o">&gt;</span> <span class="n">schemes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">IScheme</span><span class="o">&gt;,</span> <span class="n">SchemeFactory</span><span class="o">&gt;();</span>
+    <span class="kd">static</span> <span class="o">{</span>
+      <span class="n">schemes</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">StandardScheme</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="k">new</span> <span class="n">multiply_resultStandardSchemeFactory</span><span class="o">());</span>
+      <span class="n">schemes</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">TupleScheme</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="k">new</span> <span class="n">multiply_resultTupleSchemeFactory</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="n">success</span><span class="o">;</span> <span class="c1">// required</span>
+
+    <span class="cm">/** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */</span>
+    <span class="kd">public</span> <span class="kd">enum</span> <span class="n">_Fields</span> <span class="kd">implements</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TFieldIdEnum</span> <span class="o">{</span>
+      <span class="n">SUCCESS</span><span class="o">((</span><span class="kt">short</span><span class="o">)</span><span class="mi">0</span><span class="o">,</span> <span class="s">&quot;success&quot;</span><span class="o">);</span>
+
+      <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">_Fields</span><span class="o">&gt;</span> <span class="n">byName</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">_Fields</span><span class="o">&gt;();</span>
+
+      <span class="kd">static</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">_Fields</span> <span class="n">field</span> <span class="o">:</span> <span class="n">EnumSet</span><span class="o">.</span><span class="na">allOf</span><span class="o">(</span><span class="n">_Fields</span><span class="o">.</span><span class="na">class</span><span class="o">))</span> <span class="o">{</span>
+          <span class="n">byName</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">field</span><span class="o">.</span><span class="na">getFieldName</span><span class="o">(),</span> <span class="n">field</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+
+      <span class="cm">/**</span>
+<span class="cm">       * Find the _Fields constant that matches fieldId, or null if its not found.</span>
+<span class="cm">       */</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="n">_Fields</span> <span class="nf">findByThriftId</span><span class="o">(</span><span class="kt">int</span> <span class="n">fieldId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">switch</span><span class="o">(</span><span class="n">fieldId</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="c1">// SUCCESS</span>
+            <span class="k">return</span> <span class="n">SUCCESS</span><span class="o">;</span>
+          <span class="k">default</span><span class="o">:</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+
+      <span class="cm">/**</span>
+<span class="cm">       * Find the _Fields constant that matches fieldId, throwing an exception</span>
+<span class="cm">       * if it is not found.</span>
+<span class="cm">       */</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="n">_Fields</span> <span class="nf">findByThriftIdOrThrow</span><span class="o">(</span><span class="kt">int</span> <span class="n">fieldId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">_Fields</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">findByThriftId</span><span class="o">(</span><span class="n">fieldId</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">fields</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">(</span><span class="s">&quot;Field &quot;</span> <span class="o">+</span> <span class="n">fieldId</span> <span class="o">+</span> <span class="s">&quot; doesn&#39;t exist!&quot;</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">fields</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="cm">/**</span>
+<span class="cm">       * Find the _Fields constant that matches name, or null if its not found.</span>
+<span class="cm">       */</span>
+      <span class="kd">public</span> <span class="kd">static</span> <span class="n">_Fields</span> <span class="nf">findByName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">byName</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+      <span class="o">}</span>
+
+      <span class="kd">private</span> <span class="kd">final</span> <span class="kt">short</span> <span class="n">_thriftId</span><span class="o">;</span>
+      <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">_fieldName</span><span class="o">;</span>
+
+      <span class="n">_Fields</span><span class="o">(</span><span class="kt">short</span> <span class="n">thriftId</span><span class="o">,</span> <span class="n">String</span> <span class="n">fieldName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">_thriftId</span> <span class="o">=</span> <span class="n">thriftId</span><span class="o">;</span>
+        <span class="n">_fieldName</span> <span class="o">=</span> <span class="n">fieldName</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="kt">short</span> <span class="nf">getThriftFieldId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">_thriftId</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="n">String</span> <span class="nf">getFieldName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">_fieldName</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="c1">// isset id assignments</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">__SUCCESS_ISSET_ID</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">byte</span> <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">_Fields</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">&gt;</span> <span class="n">metaDataMap</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="o">{</span>
+      <span class="n">Map</span><span class="o">&lt;</span><span class="n">_Fields</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">&gt;</span> <span class="n">tmpMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EnumMap</span><span class="o">&lt;</span><span class="n">_Fields</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">&gt;(</span><span class="n">_Fields</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+      <span class="n">tmpMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">_Fields</span><span class="o">.</span><span class="na">SUCCESS</span><span class="o">,</span> <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">(</span><span class="s">&quot;success&quot;</span><span class="o">,</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TFieldRequirementType</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">,</span> 
+          <span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldValueMetaData</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span>          <span class="o">,</span> <span class="s">&quot;int&quot;</span><span class="o">)));</span>
+      <span class="n">metaDataMap</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">unmodifiableMap</span><span class="o">(</span><span class="n">tmpMap</span><span class="o">);</span>
+      <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">meta_data</span><span class="o">.</span><span class="na">FieldMetaData</span><span class="o">.</span><span class="na">addStructMetaDataMap</span><span class="o">(</span><span class="n">multiply_result</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">metaDataMap</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">multiply_result</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">multiply_result</span><span class="o">(</span>
+      <span class="kt">int</span> <span class="n">success</span><span class="o">)</span>
+    <span class="o">{</span>
+      <span class="k">this</span><span class="o">();</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="n">success</span><span class="o">;</span>
+      <span class="n">setSuccessIsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Performs a deep copy on &lt;i&gt;other&lt;/i&gt;.</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">multiply_result</span><span class="o">(</span><span class="n">multiply_result</span> <span class="n">other</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="na">__isset_bitfield</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="na">success</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">multiply_result</span> <span class="nf">deepCopy</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nf">multiply_result</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clear</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">setSuccessIsSet</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSuccess</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">success</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">multiply_result</span> <span class="nf">setSuccess</span><span class="o">(</span><span class="kt">int</span> <span class="n">success</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="n">success</span><span class="o">;</span>
+      <span class="n">setSuccessIsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">unsetSuccess</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">clearBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__SUCCESS_ISSET_ID</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Returns true if field success is set (has been assigned a value) and false otherwise */</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSetSuccess</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">testBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__SUCCESS_ISSET_ID</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSuccessIsSet</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="n">EncodingUtils</span><span class="o">.</span><span class="na">setBit</span><span class="o">(</span><span class="n">__isset_bitfield</span><span class="o">,</span> <span class="n">__SUCCESS_ISSET_ID</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setFieldValue</span><span class="o">(</span><span class="n">_Fields</span> <span class="n">field</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">switch</span> <span class="o">(</span><span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nl">SUCCESS:</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">unsetSuccess</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+          <span class="n">setSuccess</span><span class="o">((</span><span class="n">Integer</span><span class="o">)</span><span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">break</span><span class="o">;</span>
+
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getFieldValue</span><span class="o">(</span><span class="n">_Fields</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">switch</span> <span class="o">(</span><span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nl">SUCCESS:</span>
+        <span class="k">return</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">getSuccess</span><span class="o">());</span>
+
+      <span class="o">}</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSet</span><span class="o">(</span><span class="n">_Fields</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">field</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="k">switch</span> <span class="o">(</span><span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="nl">SUCCESS:</span>
+        <span class="k">return</span> <span class="nf">isSetSuccess</span><span class="o">();</span>
+      <span class="o">}</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">that</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">that</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">that</span> <span class="k">instanceof</span> <span class="n">multiply_result</span><span class="o">)</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">equals</span><span class="o">((</span><span class="n">multiply_result</span><span class="o">)</span><span class="n">that</span><span class="o">);</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">multiply_result</span> <span class="n">that</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">that</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+
+      <span class="kt">boolean</span> <span class="n">this_present_success</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+      <span class="kt">boolean</span> <span class="n">that_present_success</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">this_present_success</span> <span class="o">||</span> <span class="n">that_present_success</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!(</span><span class="n">this_present_success</span> <span class="o">&amp;&amp;</span> <span class="n">that_present_success</span><span class="o">))</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">success</span> <span class="o">!=</span> <span class="n">that</span><span class="o">.</span><span class="na">success</span><span class="o">)</span>
+          <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compareTo</span><span class="o">(</span><span class="n">multiply_result</span> <span class="n">other</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(!</span><span class="n">getClass</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">other</span><span class="o">.</span><span class="na">getClass</span><span class="o">()))</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">().</span><span class="na">compareTo</span><span class="o">(</span><span class="n">other</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+      <span class="o">}</span>
+
+      <span class="kt">int</span> <span class="n">lastComparison</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">multiply_result</span> <span class="n">typedOther</span> <span class="o">=</span> <span class="o">(</span><span class="n">multiply_result</span><span class="o">)</span><span class="n">other</span><span class="o">;</span>
+
+      <span class="n">lastComparison</span> <span class="o">=</span> <span class="n">Boolean</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">isSetSuccess</span><span class="o">()).</span><span class="na">compareTo</span><span class="o">(</span><span class="n">typedOther</span><span class="o">.</span><span class="na">isSetSuccess</span><span class="o">());</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">lastComparison</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">lastComparison</span><span class="o">;</span>
+      <span class="o">}</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">isSetSuccess</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">lastComparison</span> <span class="o">=</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TBaseHelper</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">success</span><span class="o">,</span> <span class="n">typedOther</span><span class="o">.</span><span class="na">success</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">lastComparison</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="n">lastComparison</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">_Fields</span> <span class="nf">fieldForId</span><span class="o">(</span><span class="kt">int</span> <span class="n">fieldId</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">_Fields</span><span class="o">.</span><span class="na">findByThriftId</span><span class="o">(</span><span class="n">fieldId</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">read</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">iprot</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+      <span class="n">schemes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">iprot</span><span class="o">.</span><span class="na">getScheme</span><span class="o">()).</span><span class="na">getScheme</span><span class="o">().</span><span class="na">read</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">oprot</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+      <span class="n">schemes</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">oprot</span><span class="o">.</span><span class="na">getScheme</span><span class="o">()).</span><span class="na">getScheme</span><span class="o">().</span><span class="na">write</span><span class="o">(</span><span class="n">oprot</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+      <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&quot;multiply_result(&quot;</span><span class="o">);</span>
+      <span class="kt">boolean</span> <span class="n">first</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+      <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;success:&quot;</span><span class="o">);</span>
+      <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">success</span><span class="o">);</span>
+      <span class="n">first</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+      <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;)&quot;</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">validate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+      <span class="c1">// check for required fields</span>
+      <span class="c1">// check for sub-struct validity</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">writeObject</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">ObjectOutputStream</span> <span class="n">out</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+        <span class="n">write</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TCompactProtocol</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TIOStreamTransport</span><span class="o">(</span><span class="n">out</span><span class="o">)));</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="n">te</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span><span class="o">(</span><span class="n">te</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">readObject</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">ObjectInputStream</span> <span class="n">in</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span><span class="o">,</span> <span class="n">ClassNotFoundException</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+        <span class="c1">// it doesn&#39;t seem like you should have to do this, but java serialization is wacky, and doesn&#39;t call the default constructor.</span>
+        <span class="n">__isset_bitfield</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="n">read</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TCompactProtocol</span><span class="o">(</span><span class="k">new</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">transport</span><span class="o">.</span><span class="na">TIOStreamTransport</span><span class="o">(</span><span class="n">in</span><span class="o">)));</span>
+      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="n">te</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">IOException</span><span class="o">(</span><span class="n">te</span><span class="o">);</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_resultStandardSchemeFactory</span> <span class="kd">implements</span> <span class="n">SchemeFactory</span> <span class="o">{</span>
+      <span class="kd">public</span> <span class="n">multiply_resultStandardScheme</span> <span class="nf">getScheme</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">multiply_resultStandardScheme</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_resultStandardScheme</span> <span class="kd">extends</span> <span class="n">StandardScheme</span><span class="o">&lt;</span><span class="n">multiply_result</span><span class="o">&gt;</span> <span class="o">{</span>
+
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">read</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">iprot</span><span class="o">,</span> <span class="n">multiply_result</span> <span class="n">struct</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TField</span> <span class="n">schemeField</span><span class="o">;</span>
+        <span class="n">iprot</span><span class="o">.</span><span class="na">readStructBegin</span><span class="o">();</span>
+        <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+        <span class="o">{</span>
+          <span class="n">schemeField</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readFieldBegin</span><span class="o">();</span>
+          <span class="k">if</span> <span class="o">(</span><span class="n">schemeField</span><span class="o">.</span><span class="na">type</span> <span class="o">==</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">STOP</span><span class="o">)</span> <span class="o">{</span> 
+            <span class="k">break</span><span class="o">;</span>
+          <span class="o">}</span>
+          <span class="k">switch</span> <span class="o">(</span><span class="n">schemeField</span><span class="o">.</span><span class="na">id</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="c1">// SUCCESS</span>
+              <span class="k">if</span> <span class="o">(</span><span class="n">schemeField</span><span class="o">.</span><span class="na">type</span> <span class="o">==</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TType</span><span class="o">.</span><span class="na">I32</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">struct</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readI32</span><span class="o">();</span>
+                <span class="n">struct</span><span class="o">.</span><span class="na">setSuccessIsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+              <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> 
+                <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolUtil</span><span class="o">.</span><span class="na">skip</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="n">schemeField</span><span class="o">.</span><span class="na">type</span><span class="o">);</span>
+              <span class="o">}</span>
+              <span class="k">break</span><span class="o">;</span>
+            <span class="k">default</span><span class="o">:</span>
+              <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocolUtil</span><span class="o">.</span><span class="na">skip</span><span class="o">(</span><span class="n">iprot</span><span class="o">,</span> <span class="n">schemeField</span><span class="o">.</span><span class="na">type</span><span class="o">);</span>
+          <span class="o">}</span>
+          <span class="n">iprot</span><span class="o">.</span><span class="na">readFieldEnd</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">iprot</span><span class="o">.</span><span class="na">readStructEnd</span><span class="o">();</span>
+
+        <span class="c1">// check for required fields of primitive type, which can&#39;t be checked in the validate method</span>
+        <span class="n">struct</span><span class="o">.</span><span class="na">validate</span><span class="o">();</span>
+      <span class="o">}</span>
+
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">oprot</span><span class="o">,</span> <span class="n">multiply_result</span> <span class="n">struct</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">struct</span><span class="o">.</span><span class="na">validate</span><span class="o">();</span>
+
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeStructBegin</span><span class="o">(</span><span class="n">STRUCT_DESC</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">isSetSuccess</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">oprot</span><span class="o">.</span><span class="na">writeFieldBegin</span><span class="o">(</span><span class="n">SUCCESS_FIELD_DESC</span><span class="o">);</span>
+          <span class="n">oprot</span><span class="o">.</span><span class="na">writeI32</span><span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">success</span><span class="o">);</span>
+          <span class="n">oprot</span><span class="o">.</span><span class="na">writeFieldEnd</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeFieldStop</span><span class="o">();</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeStructEnd</span><span class="o">();</span>
+      <span class="o">}</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_resultTupleSchemeFactory</span> <span class="kd">implements</span> <span class="n">SchemeFactory</span> <span class="o">{</span>
+      <span class="kd">public</span> <span class="n">multiply_resultTupleScheme</span> <span class="nf">getScheme</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">multiply_resultTupleScheme</span><span class="o">();</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">multiply_resultTupleScheme</span> <span class="kd">extends</span> <span class="n">TupleScheme</span><span class="o">&lt;</span><span class="n">multiply_result</span><span class="o">&gt;</span> <span class="o">{</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">write</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">prot</span><span class="o">,</span> <span class="n">multiply_result</span> <span class="n">struct</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">TTupleProtocol</span> <span class="n">oprot</span> <span class="o">=</span> <span class="o">(</span><span class="n">TTupleProtocol</span><span class="o">)</span> <span class="n">prot</span><span class="o">;</span>
+        <span class="n">BitSet</span> <span class="n">optionals</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BitSet</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">isSetSuccess</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">optionals</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">oprot</span><span class="o">.</span><span class="na">writeBitSet</span><span class="o">(</span><span class="n">optionals</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">isSetSuccess</span><span class="o">())</span> <span class="o">{</span>
+          <span class="n">oprot</span><span class="o">.</span><span class="na">writeI32</span><span class="o">(</span><span class="n">struct</span><span class="o">.</span><span class="na">success</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">read</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">protocol</span><span class="o">.</span><span class="na">TProtocol</span> <span class="n">prot</span><span class="o">,</span> <span class="n">multiply_result</span> <span class="n">struct</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">thrift</span><span class="o">.</span><span class="na">TException</span> <span class="o">{</span>
+        <span class="n">TTupleProtocol</span> <span class="n">iprot</span> <span class="o">=</span> <span class="o">(</span><span class="n">TTupleProtocol</span><span class="o">)</span> <span class="n">prot</span><span class="o">;</span>
+        <span class="n">BitSet</span> <span class="n">incoming</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readBitSet</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">incoming</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">{</span>
+          <span class="n">struct</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="n">iprot</span><span class="o">.</span><span class="na">readI32</span><span class="o">();</span>
+          <span class="n">struct</span><span class="o">.</span><span class="na">setSuccessIsSet</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage-example.html"
+                        title="previous chapter">Thrift by Example</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/multiplication-service.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="usage-example.html" title="Thrift by Example"
+             >previous</a> |</li>
+        <li><a href="index.html">Thrift Tutorial 1.0 documentation</a> &raquo;</li>
+          <li><a href="usage-example.html" >Thrift by Example</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Stratos Dimopoulos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

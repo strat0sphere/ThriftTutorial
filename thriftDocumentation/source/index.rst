@@ -14,6 +14,7 @@ The purpose of this document is to describe step by step Thrift's installation a
    intro
    installation
    thrift-types
+   thrift-stack
    thrift-file
    usage-example
    
