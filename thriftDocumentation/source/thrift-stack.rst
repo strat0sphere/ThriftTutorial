@@ -17,7 +17,7 @@ I will now try to give a briefly present Thrift's architecture.
 
 Runtime Library
 ----------------
-The protocol and transport layer are part of the runtime library. This means that it is to define a service and change the protocol and transport without recompiling the code.
+The protocol and transport layer are part of the runtime library. This means that it is possible to define a service and change the protocol and transport without recompiling the code.
 
 Protocol Layer
 ^^^^^^^^^^^^^^

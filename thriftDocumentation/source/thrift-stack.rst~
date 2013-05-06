@@ -5,7 +5,7 @@ To understand Thrift's protocol stack I highly recommend to take a look at the w
 I will now try to give a briefly present Thrift's architecture.
 
 .. figure:: images/Apache_Thrift_architecture.png
-	:scale: 73%
+	:scale: 70%
 	:alt: Apache Thrift Architecture.
 	:align: right
 
