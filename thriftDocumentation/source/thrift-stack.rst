@@ -21,7 +21,7 @@ The protocol and transport layer are part of the runtime library. This means tha
 
 Protocol Layer
 ^^^^^^^^^^^^^^
-The protocol layer provides serializationa and deserialization.
+The protocol layer provides serialization and deserialization.
 Thrift supports the following protocols :
 
 * TBinaryProtocol - A straight-forward binary format encoding numeric values as binary, rather than converting to text.
