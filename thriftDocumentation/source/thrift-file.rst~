@@ -34,7 +34,7 @@ Thrift will now generate code for you and place it in the gen-java and gen-py di
 
 A more detailed example of how you can specify structs, exceptions and other thrift language constructs inside your definition file is specified on tutorial.thrift file that comes along with your Thrift installation. The file contains descriptive comments and it is self-explanatory. Below we notice its most importand parts.
 
-Include other .thrift files
+You can include other .thrift files
 ###################################
 
 *  Included objects are accessed using the name of the .thrift file as a prefix. i.e. shared.SharedObject ::
@@ -42,12 +42,19 @@ Include other .thrift files
 	include "shared.thrift"
 
 	
+	typedef i32 MyInteger
 
-Define C-style enumerations 
-###############################
-	
-* Values are optional and start at 1 if not specified. ::
+	/**
+	 * Thrift also lets you define constants for use across languages. Complex
+	 * types and structs are specified using JSON notation.
+	 */
+	const i32 INT32CONSTANT = 9853
+	const map<string,string> MAPCONSTANT = {'hello':'world', 'goodnight':'moon'}
 
+	/**
+	 * You can define enums, which are just 32 bit integers. Values are optional
+	 * and start at 1 if not supplied, C style again.
+	 */
 	enum Operation {
 	  ADD = 1,
 	  SUBTRACT = 2,
@@ -55,11 +62,15 @@ Define C-style enumerations
 	  DIVIDE = 4
 	}
 
-Definine Structs
-################
-
-* Fields can be declared "optional", which ensures they will not be included in the serialized output if they aren't set - This requires some manual management in some languages. Do you notice the numbers before each field type? Fields identifiers is the way Thrift performs versioning. :: 
-
+	/**
+	 * Structs are the basic complex data structures. They are comprised of fields
+	 * which each have an integer identifier, a type, a symbolic name, and an
+	 * optional default value.
+	 *
+	 * Fields can be declared "optional", which ensures they will not be included
+	 * in the serialized output if they aren't set.  Note that this requires some
+	 * manual management in some languages.
+	 */
 	struct Work {
 	  1: i32 num1 = 0,
 	  2: i32 num2,

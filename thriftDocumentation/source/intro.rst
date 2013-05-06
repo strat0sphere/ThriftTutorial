@@ -1,7 +1,10 @@
 Introduction to Thrift
 =======================================
 
-Thrift was originally developed by Facebook and now it is open sourced as an Apache project.
+Thrift is a lightweight, language-independent software stack with an
+associated code generation mechanism for RPC. Thrift provides clean
+abstractions for data transport, data serialization, and application
+level processing. Thrift was originally developed by Facebook and now it is open sourced as an Apache project.
 Apache Thrift is a set of code-generation tools that allows developers to build RPC clients and 
 servers by just defining the data types and service interfaces in a simple definition file. Given 
 this file as an input, code is generated to build RPC clients and servers that communicate 
@@ -16,6 +19,5 @@ for simplicity I will focus this tutorial on examples that include Java and Pyth
 .. toctree::
    :maxdepth: 2
    
-   thrift-types
    
 

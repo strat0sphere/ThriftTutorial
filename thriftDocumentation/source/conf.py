@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Thrift Demo documentation build configuration file, created by
+# Thrift Tutorial build configuration file, created by
 # sphinx-quickstart on Fri May  3 12:12:55 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -186,7 +186,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'ThriftDemo.tex', u'Thrift Demo Documentation',
+  ('index', 'ThriftDemo.tex', u'Thrift Tutorial',
    u'Stratos Dimopoulos', 'manual'),
 ]
 
@@ -216,7 +216,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'thriftdemo', u'Thrift Demo Documentation',
+    ('index', 'thriftdemo', u'Thrift Tutorial',
      [u'Stratos Dimopoulos'], 1)
 ]
 
@@ -230,7 +230,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'ThriftDemo', u'Thrift Demo Documentation',
+  ('index', 'ThriftDemo', u'Thrift Tutorial',
    u'Stratos Dimopoulos', 'ThriftDemo', 'One line description of project.',
    'Miscellaneous'),
 ]

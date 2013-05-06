@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Thrift Demo'
+project = u'Thrift Tutorial'
 copyright = u'2013, Stratos Dimopoulos'
 
 # The version info for the project you're documenting, acts as replacement for

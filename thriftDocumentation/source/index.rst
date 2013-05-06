@@ -3,18 +3,19 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Thrift Demo's documentation!
+Welcome to Thrift Tutorial!
 =======================================
 
 The purpose of this document is to describe step by step Thrift's installation and give simple examples of its usage.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
    intro
    installation
+   thrift-types
    thrift-file
-   usage-examples
+   usage-example
    
 
 
