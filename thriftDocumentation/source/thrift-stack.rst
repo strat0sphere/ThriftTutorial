@@ -2,7 +2,7 @@ Thrift protocol stack
 =======================================
 
 To understand Thrift's protocol stack I highly recommend to take a look at the white-paper: http://thrift.apache.org/static/files/thrift-20070401.pdf and to the Thrift Architecture part of this very nice description here: http://jnb.ociweb.com/jnb/jnbJun2009.html - Part of the following content is directly derived from these sources.
-I will now try to give a briefly present Thrift's architecture.
+I will now briefly present Thrift's architecture.
 
 .. figure:: images/Apache_Thrift_architecture.png
 	:scale: 70%
