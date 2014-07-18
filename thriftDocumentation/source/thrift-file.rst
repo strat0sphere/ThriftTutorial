@@ -4,7 +4,7 @@ Writing a .thrift file
 In a .thrift file you can define the services that your server will implement and that they will be called by any clients.
 The Thrift compiler will read this file and generate source code to be used from the servers and clients you will write.
 
-A simple .thrift file with witch we defined our simple multiplication service for this demo looks like this:
+A simple .thrift file with which we defined our simple multiplication service for this demo looks like this:
 
      .. code-block:: python
 
