@@ -17,7 +17,7 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 
 	* You can check for specific requirements for each language you wish to use here: http://thrift.apache.org/docs/install/
 
-	#. Download Thrift: http://thrift.apache.org/download/
+	#. Download Thrift: http://thrift.apache.org/download
 
 	#. Copy the downloaded file into the desired directory and untar the file ::
 				
