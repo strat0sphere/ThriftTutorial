@@ -31,9 +31,9 @@ If you named this file multiplication.thrift and you want to use java and python
 	thrift --gen java multiplication.thrift
 	thrift --gen py multiplication.thrift
 
-Thrift will now generate code for you and place it in the gen-java and gen-py directories respectively. Make sure you have saficient rights to write inside the directory. Otherwise you might need to run the above commands as sudo user. 
+Thrift will now generate code for you and place it in the gen-java and gen-py directories respectively. Make sure you have sufficient rights to write inside the directory. Otherwise you might need to run the above commands as sudo user. 
 
-* Notice in the above file the namespaces we define. They dictate that Thrift should generate a sub-directory named tutorial inside gen-java and gen-py and place the output files there. We could have specified different namespaces for java and python. We could also ommit specifying a namespace. In the latter case the files would be place directly inside the gen-java and gen-py directories.
+* Notice in the above file the namespaces we define. They dictate that Thrift should generate a sub-directory named tutorial inside gen-java and gen-py and place the output files there. We could have specified different namespaces for java and python. We could also omit specifying a namespace. In the latter case the files would be place directly inside the gen-java and gen-py directories.
 * Notice also that we can typedef Thrift types with something more easy to remember (i32 with int in this case)
 
 A more detailed example of how you can specify structs, exceptions and other thrift language constructs inside your definition file is specified on tutorial.thrift file that comes along with your Thrift installation. The file contains descriptive comments and it is self-explanatory. Below we notice its most importand parts.
