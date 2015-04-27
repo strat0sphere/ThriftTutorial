@@ -27,7 +27,8 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 	
 		* For an Ubuntu linux distribution you just need to go to the thrift directory and type: ::
 
-			sudo ./configure
+			./bootstrap.sh
+			./configure
 		
 		* At the end of the output you should be able to see a list of all the libraries that are currently built in your system and ready to use with your desired programming languages. If a component is missing you should download the missing language and repeat the above step. ::
 		
@@ -60,7 +61,7 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 				   Using Python .............. : /usr/bin/python
 
 
-		* Here http://thrift.apache.org/docs/install/ubuntu/ you can find all the packages you might need to support your desired language in case some of them are missing.
+		* Here http://thrift.apache.org/docs/install/debian/ you can find all the packages you might need to support your desired language in case some of them are missing.
 
 		* On the same directory run make to build Thrift ::
 
