@@ -4,7 +4,7 @@ Thrift type system
 The thrift type system includes base types like bool, byte, double, string and integer but also special types like binary and it also supports structs (equivalent to classes but without inheritance) and also containers (list, set, map) that correspond to commonly available interfaces in most programming languages. The type system focuses on key types available in all programming languages and omits types that are specific to only some programming languages.
 
 * A detailed reference to Thrift type system follows next and more details can be found here: http://thrift.apache.org/docs/types
-* If you want to check the Thrift interface description language that allows for the definition of Thrift types you can read here: http://thrift.apache.org/docs/idl/
+* If you want to check the Thrift interface description language that allows for the definition of Thrift types you can read here: http://thrift.apache.org/docs/idl
 
 Base types
 -----------
