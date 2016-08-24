@@ -13,7 +13,7 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 
 	#. Installing required tools and libraries: ::
 
-		sudo apt-get install libboost-dev libboost-test-dev libboost-program-options-dev libevent-dev automake libtool flex bison pkg-config g++ libssl-dev
+		sudo apt-get install libboost-dev libboost-test-dev libboost-program-options-dev libboost-filesystem-dev libboost-thread-dev libevent-dev automake libtool flex bison pkg-config g++ libssl-dev
 
 	* You can check for specific requirements for each language you wish to use here: http://thrift.apache.org/docs/install/
 
@@ -21,7 +21,7 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 
 	#. Copy the downloaded file into the desired directory and untar the file ::
 				
-		tar -xvf thrift-0.9.0.tar.gz
+		tar -xvf thrift-0.9.3.tar.gz
     
 	#. For detailed instuctions on how to build Apache Thrift on your specific system you can read here: http://thrift.apache.org/docs/BuildingFromSource/
 	
@@ -32,7 +32,7 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 		
 		* At the end of the output you should be able to see a list of all the libraries that are currently built in your system and ready to use with your desired programming languages. If a component is missing you should download the missing language and repeat the above step. ::
 		
-				thrift 0.9.0
+				thrift 0.9.3
 
 				Building C++ Library ......... : yes
 				Building C (GLib) Library .... : no
@@ -66,6 +66,11 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 		* On the same directory run make to build Thrift ::
 
 			sudo make
+			
+		* (Optional) Run the test suite if you want ::
+		
+			sudo make check
+			
 		* And finally you are ready to install Thrift by running ::
 
 			sudo make install
