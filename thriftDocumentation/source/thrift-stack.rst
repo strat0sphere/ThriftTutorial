@@ -32,7 +32,7 @@ Thrift supports the following protocols :
 * TDebugProtocol - Uses a human-readable text format to aid in debugging.
   
 
-Tranport Layer
+Transport Layer
 ^^^^^^^^^^^^^^^
 The transport layer is responsible for reading from and writing to the wire.
 Thrift supports the following:
