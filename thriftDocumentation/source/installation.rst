@@ -24,7 +24,6 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 		tar -xvf thrift-0.9.3.tar.gz
     
 	#. For detailed instuctions on how to build Apache Thrift on your specific system you can read here: http://thrift.apache.org/docs/BuildingFromSource
-
 	
 		* For an Ubuntu linux distribution you just need to go to the thrift directory and type: ::
 
