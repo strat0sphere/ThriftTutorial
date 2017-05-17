@@ -44,8 +44,8 @@ On this example I will demonstrate the creation of a simple multiplication servi
 
 * Name this file multiple.thrift and then run the below commands to generate code for java and python ::
 
-	thrift --gen java multiplication.thrift
-	thrift --gen py multiplication.thrift
+	thrift --gen java multiple.thrift
+	thrift --gen py multiple.thrift
 
 After running the commands Thrift should generate code inside the directories gen-java/tutorial and gen-py/tutorial for Java and Python respectively. 
 ``Remember to use sudo in case the directories are not created!``
