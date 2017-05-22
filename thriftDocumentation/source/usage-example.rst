@@ -76,7 +76,7 @@ The only thing worth messioning about the server implementation is the usage of 
 Java Multiplication Client
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Importand things to notice on the client code is the use of the TBinaryProtocol for the serializitaion and deserialization part. I could also use the compact, the JSON protocol or any other protocol supported by thrift. For more details on the protocols you can use please refer to the :doc:`thrift-stack` section of this tutorial.
+Important things to notice on the client code is the use of the TBinaryProtocol for the serializitaion and deserialization part. I could also use the compact, the JSON protocol or any other protocol supported by thrift. For more details on the protocols you can use please refer to the :doc:`thrift-stack` section of this tutorial.
 Another importand thing to notice is the use of the client and the coresponding client.multiply() method provided to us by the auto-generated thrift code. This call behind the scenes calls the TServiceClient.sendBase() method that will write the data to the wire.
 
  .. literalinclude:: code_examples/MultiplicationClient.java
