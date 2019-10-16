@@ -65,11 +65,11 @@ On Ubuntu Linux for example you just need to first install the dependencies and 
 
 		* On the same directory run make to build Thrift ::
 
-			sudo make
+			make
 			
 		* (Optional) Run the test suite if you want ::
 		
-			sudo make check
+			make check
 			
 		* And finally you are ready to install Thrift by running ::
 
